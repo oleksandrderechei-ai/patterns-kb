@@ -59,11 +59,6 @@
     {
       "@id": "../../designs/persona-identification.html#persona-identification",
       "name": "Persona Identification & Sanction Check",
-      "kb:note": "a KYC flow builds a session for a principal with no account — an opaque single-use link whose state is a stored hash, which is what lets it be expired and revoked; a self-validating token could be neither"
-    },
-    {
-      "@id": "../../designs/persona-identification-v2.html#persona-identification-v2",
-      "name": "Persona Identification & Sanction Check (V2)",
       "kb:note": "a session designed around a person who will never register, and revoked by a resend rather than by a logout"
     }
   ],
@@ -380,8 +375,7 @@ class SessionStore {
             <div class="rel-group">
         <p class="rel-type">Demonstrated by</p>
         <div class="rel-list">
-          <div class="rel-item" data-kb-rel="demonstrated-by" data-kb-to="persona-identification"><a href="../../designs/persona-identification.html">Persona Identification &amp; Sanction Check</a><span class="rel-note">a KYC flow builds a session for a principal with no account — an opaque single-use link whose state is a stored hash, which is what lets it be expired and revoked; a self-validating token could be neither</span></div>
-          <div class="rel-item" data-kb-rel="demonstrated-by" data-kb-to="persona-identification-v2"><a href="../../designs/persona-identification-v2.html">Persona Identification &amp; Sanction Check (V2)</a><span class="rel-note">a session designed around a person who will never register, and revoked by a resend rather than by a logout</span></div>
+          <div class="rel-item" data-kb-rel="demonstrated-by" data-kb-to="persona-identification"><a href="../../designs/persona-identification.html">Persona Identification &amp; Sanction Check</a><span class="rel-note">a session designed around a person who will never register, and revoked by a resend rather than by a logout</span></div>
         </div>
       </div>
 

@@ -212,7 +212,9 @@
    the same size. */
 .doc-section > .prose > h3,
 .entity-group > h3,
-.endpoint-group > h3 {
+.endpoint-group > h3,
+.endpoint-group > summary > h3,
+.sizing-group > summary > h3 {
   font-family: var(--font-mono);
   font-size: var(--text-h3);
   font-weight: 700;
@@ -241,8 +243,11 @@
    paragraph under it. Size and weight carry the difference from rank 3; the colour says
    "this is a title" on both. */
 .doc-section > .prose > h4,
+.doc-section > details.how > .prose > h4,
+details.module-group > summary > h4,
 .entity h4,
 .endpoint h4,
+.impl h4,
 .requirements h4 {
   font-family: var(--font-mono);
   font-size: var(--text-h4);
@@ -372,12 +377,126 @@
    `.nonfunctional > ul > li` still means "a legacy NFR row" on the 39 pages that write one,
    because here the lists sit inside .nfr and never directly under the column. */
 .nfr { margin: 0 0 var(--space-4); }
-.nfr > h4 { margin-top: 0; }
-.nfr:first-of-type > h4 { margin-top: 0; }
+.nfr > h4,
+.nfr > summary > h4 { margin-top: 0; }
+
+/* ---------- The collapsible requirements ledger ----------
+   A requirements block that runs to 23 FRs and 8 NFR sections is a wall: every row is a
+   full sentence, so nothing scans and the reader cannot see the shape of the promise
+   before reading all of it. Three disclosures fix that WITHOUT hiding anything from a
+   crawler or a Ctrl+F — a closed <details> keeps its content in the DOM, so the full
+   sentence is still indexed and still found; it is only the first paint that is short.
+
+   | wrapper           | summary shows           | holds                        |
+   |-------------------|-------------------------|------------------------------|
+   | `details.req`     | the requirement's stem  | the full one-sentence FR     |
+   | `details.req-tier`| the tier's <h4>         | that tier's whole list       |
+   | `details.nfr`     | the NFR's <h4>          | that section's points        |
+
+   **The mandatory tier is never one of them.** It is the product promise, so it is a plain
+   `<h4>` over a plain list of full sentences — no `details.req-tier` around it, no
+   `details.req` inside it, and therefore no ▸ affordance and nothing for a reader to open.
+   A disclosure that ships `open` still says "this can be put away", and the minimum
+   product is the one part of a ledger that may not be. Compaction applies to the tiers
+   BELOW it — the additional obligations, and the NFR sections.
+
+   The two group shapes reuse the summary-wraps-a-heading move `details.endpoint-group` and
+   `details.sizing-group` already make below, and take the same ▸/▾ affordance, so a case
+   study has ONE collapse idiom rather than three that look unrelated. (`.entity-group` is
+   the exception, and says why at its own rule: its subsection is already titled, so its
+   summary is a control rather than a heading.)
+
+   Every disclosure here starts closed: the point is a ledger whose mandatory core is open
+   prose, and whose remainder you read the shape of first and drill into second. */
+details.req-tier { margin: 0 0 var(--space-4); }
+details.req-tier > summary,
+details.nfr > summary { list-style: none; cursor: pointer; }
+details.req-tier > summary::-webkit-details-marker,
+details.nfr > summary::-webkit-details-marker { display: none; }
+details.req-tier > summary > h4::before,
+details.nfr > summary > h4::before { content: "▸ "; color: var(--band-color); }
+details.req-tier[open] > summary > h4::before,
+details.nfr[open] > summary > h4::before { content: "▾ "; }
+/* A closed group's title is the whole box, so the gap under it is the group's own gap. */
+details.req-tier:not([open]) > summary > h4,
+details.nfr:not([open]) > summary > h4 { margin-bottom: 0; }
+
+/* One row. The triangle REPLACES the list bullet rather than joining it — two markers on
+   one line read as two controls, and only one of them does anything.
+
+   `details.claim` is the same row at the same scale, wherever a case study makes a claim
+   and owes the sentence that backs it: a levels behaviour and its answer, a trade-off's
+   bold claim and its fact. Written open, both stop being ledgers — fourteen rubric
+   paragraphs is two screens of prose, and the claims are the part the reader came to run
+   their eye down. It shares these rules rather than restating them, so a case study keeps
+   ONE row idiom across four blocks. Only the marker slot differs, and the trade-off
+   columns say why at their own rule below. */
+.requirements li:has(> details.req),
+.prose li:has(> details.claim) { list-style: none; }
+details.req > summary,
+details.claim > summary {
+  list-style: none;
+  cursor: pointer;
+  line-height: var(--leading-body);
+}
+details.req > summary::-webkit-details-marker,
+details.claim > summary::-webkit-details-marker { display: none; }
+details.req > summary::before,
+details.claim > summary::before { content: "▸ "; color: var(--band-color); }
+details.req[open] > summary::before,
+details.claim[open] > summary::before { content: "▾ "; }
+/* The full sentence, indented under its stem so an open row stays visibly subordinate to
+   the closed rows around it. The stem keeps plain ink and the sentence takes `--ink-soft`,
+   never the other way round: the stem is what the reader scans, and painting 23 of them in
+   `--stress` would make the loudest thing on the page a list of labels. */
+details.req > p,
+details.claim > p {
+  margin: 0.3rem 0 0.6rem 1.1rem;
+  color: var(--ink-soft);
+  line-height: var(--leading-body);
+}
 .requirements .nonfunctional > ul > li > strong:first-child {
   color: var(--stress);
   font-weight: 700;
 }
+
+/* ---------- "Read more" — the argument under a claim ----------
+   A design's architecture block states one requirement per card — its own sentence as the
+   title, a spoken summary under it — and then owes the reader the mechanism. Both cannot be
+   open prose: 34 requirements each carrying a path, its tables and its failure branch is a
+   wall nobody scans, and the titles are the part a reader wants to run their eye down. So
+   the claim stays open and the argument sits behind this control. It is the `.entity` shape
+   with prose where the schema would be, which is why `.impl` joins the card rules below.
+
+   Unlike `.req-tier` / `.nfr` / `.endpoint-group`, the summary here is NOT a heading — the
+   heading is already above it, open. It is a fixed label, so it takes the mono card-label
+   rank the way `details.sketch`'s summary does, and the same ▸/▾ affordance every other
+   disclosure on a case study uses. The body indents under the claim, for the reason
+   `details.req > p` indents under its stem: an open disclosure has to stay visibly
+   subordinate to the closed ones around it.
+
+   The deep dives use the same control at section scale, wrapping whole `.prose` divs and
+   their figures — which is why the rank-4 rule above names `details.how > .prose > h4`. */
+details.how { margin: 0.4rem 0 var(--space-5); }
+details.how > summary {
+  font-family: var(--font-mono);
+  font-size: var(--text-xs);
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  color: var(--band-color);
+  cursor: pointer;
+  list-style: none;
+}
+details.how > summary::-webkit-details-marker { display: none; }
+details.how > summary::before { content: "▸ "; }
+details.how[open] > summary::before { content: "▾ "; }
+/* The requirement-scale variant: bare paragraphs, indented under the claim. The dive-scale
+   variant holds .prose divs and figures instead, and those keep the block's own layout. */
+details.how > p {
+  margin: 0.4rem 0 0.6rem 1.1rem;
+  line-height: var(--leading-body);
+}
+details.how > .prose:first-of-type > *:first-child { margin-top: var(--space-3); }
 
 /* ---------- Diagram (mermaid) ---------- */
 .diagram {
@@ -473,9 +592,41 @@ dl.variations dd {
 /* The claim that opens an item takes its column's colour on top of the bold. The ✓/✕ and
    the heading already say which column this is; the claim is the line a reader scanning
    the ledger stops on, and it was the only part of the block carrying no colour at all.
-   Bold stays underneath it, so nothing here depends on distinguishing green from red. */
-.tradeoffs .pros li > strong:first-child { color: var(--ok); }
-.tradeoffs .cons li > strong:first-child { color: var(--hazard); }
+   Bold stays underneath it, so nothing here depends on distinguishing green from red.
+   Where the claim is a disclosure summary, this applies to the OPEN state only — see the
+   ledger's disclosures below. */
+.tradeoffs .pros li > strong:first-child,
+.tradeoffs .pros summary > strong:first-child { color: var(--ok); }
+.tradeoffs .cons li > strong:first-child,
+.tradeoffs .cons summary > strong:first-child { color: var(--hazard); }
+
+/* ---------- The ledger's disclosures ----------
+   A trade-off item is a claim plus the fact behind it, which is `details.claim` above: the
+   claim is the line a reader scanning the ledger stops on, and the fact is what they read
+   only for the ones they stop on. Two columns of seven full sentences is not a ledger you
+   scan in thirty seconds — it is the essay this block exists not to be.
+
+   The control sits at the END of the summary here, and this is the one place it does. The
+   rule at `details.req` is that the triangle REPLACES the row's marker, because two markers
+   on one line read as two controls; a trade-off's marker slot is already taken by something
+   that means something — ✓/✕ is the polarity, and it is the only non-colour channel saying
+   which column this is. So the marker keeps its slot and the control takes the other end,
+   which is also where a reader's eye finishes the claim.
+
+   A CLOSED claim drops back to plain ink, and only an open one takes its column's colour.
+   The colour rule above was written for a block of at most four coloured claims per column;
+   fourteen of them closed is a wall of green and red in which nothing ranks, which is the
+   opposite of what colouring the claim was for. The ✓/✕ keeps its colour either way — it is
+   one glyph, it is the polarity channel, and it is what still says which column a plain-ink
+   claim sits in. So colour marks the row you opened rather than every row you could.
+
+   No `list-style` suppression and no left padding: `.tradeoffs li` already owns both. */
+.tradeoffs .pros details.claim:not([open]) > summary > strong:first-child,
+.tradeoffs .cons details.claim:not([open]) > summary > strong:first-child { color: var(--ink); }
+.tradeoffs details.claim > summary::before { content: none; }
+.tradeoffs details.claim > summary::after { content: " ▸"; color: var(--band-color); }
+.tradeoffs details.claim[open] > summary::after { content: " ▾"; }
+.tradeoffs details.claim > p { margin-left: 0; }
 .tradeoffs ul { list-style: none; margin: 0; padding: 0; }
 .tradeoffs li {
   position: relative;
@@ -590,19 +741,116 @@ pre code {
 /* A group of entities or endpoints is a rank-3 title (its store, or its caller, rides the
    subline) over rank-4 item titles. Both take the shared rules at the top of this file;
    only the spacing inside the card is local. */
-.entity-group, .endpoint-group { margin: 0 0 2rem; }
-.entity, .endpoint { margin: 0 0 1.4rem; }
-.entity h4, .endpoint h4 { margin: 0 0 0.3rem; }
+.entity-group, .endpoint-group, .sizing-group { margin: 0 0 2rem; }
+.entity, .endpoint, .impl { margin: 0 0 1.4rem; }
+.entity h4, .endpoint h4, .impl h4 { margin: 0 0 0.3rem; }
 .endpoint h4 code { font-size: inherit; background: none; padding: 0; }
 /* The one-line description under an entity or endpoint name. It was --ink-soft, which read
    as a caption for the collapsed schema below it rather than as the sentence that says what
    the thing IS — on a design page it is the only prose the reader gets before the DDL. */
-.entity > p, .endpoint > p {
+.entity > p, .endpoint > p, .impl > p {
   margin: 0 0 0.6rem;
   max-width: var(--measure);
   line-height: var(--leading-body);
 }
 .entity details.sketch, .endpoint details.sketch { margin: 0; }
+/* An endpoint or sizing group folds as a whole and its rank-3 title IS the summary, because
+   nothing else titles that subsection. The disclosure marker rides the h3 rather than the
+   summary: the h3 is a block, so a ::before on the summary box would sit on a line of its own
+   above the title. The rule and the top padding the rank-3 rule gives that h3 are what keep a
+   row of folded groups legible as a list. Both blocks open with a table naming everything
+   inside the folds, which is what makes shipping them closed a summary rather than a hiding
+   place. `.sizing-group` folds the same way and for the same reason: its block opens with a
+   bullet summary that states every verdict, so the capability, arithmetic and candidate tables
+   underneath are the evidence a reader opens when they want to check the claim, not content
+   the fold is hiding. */
+details.entity-group > summary,
+details.endpoint-group > summary,
+details.sizing-group > summary,
+details.module-group > summary { list-style: none; cursor: pointer; }
+details.entity-group > summary::-webkit-details-marker,
+details.endpoint-group > summary::-webkit-details-marker,
+details.sizing-group > summary::-webkit-details-marker,
+details.module-group > summary::-webkit-details-marker { display: none; }
+details.endpoint-group > summary > h3::before,
+details.sizing-group > summary > h3::before,
+details.module-group > summary > h4::before { content: "▸ "; color: var(--band-color); }
+details.endpoint-group[open] > summary > h3::before,
+details.sizing-group[open] > summary > h3::before,
+details.module-group[open] > summary > h4::before { content: "▾ "; }
+/* Closed, the h3's bottom margin has nothing under it to separate the title from, so five
+   folded groups read as five widely spaced orphans rather than as one list of five. */
+details.entity-group:not([open]),
+details.endpoint-group:not([open]),
+details.sizing-group:not([open]),
+details.module-group:not([open]) { margin-bottom: 0; }
+details.endpoint-group:not([open]) > summary > h3,
+details.sizing-group:not([open]) > summary > h3 { margin-bottom: 0; padding-bottom: var(--space-4); }
+details.module-group:not([open]) > summary > h4 { margin-bottom: 0; }
+/* `.entity-group` is the ONE group fold whose summary is not a title, and it must not look
+   like one. Its subsection already carries a rank-3 heading above the table and the ER figure
+   — the fold holds that same group's entity cards — so a rank-3 summary gave one group two
+   titles of equal weight, one under the other, each with the same store on its subline. The
+   reader cannot tell whether the fold opens a new group or the one they are already in.
+   So it is styled as what it is: a disclosure, one rung above the .sketch label it nests and
+   well below the heading it belongs to, band-coloured like every other fold on the page, and
+   with no rule above it — the rule is the part that said "new section". */
+details.entity-group > summary {
+  font-family: var(--font-mono);
+  font-size: var(--text-sm);
+  font-weight: 600;
+  letter-spacing: 0.02em;
+  color: var(--band-color);
+  margin: var(--space-4) 0 var(--space-4);
+}
+details.entity-group > summary::before { content: "▸ "; }
+details.entity-group[open] > summary::before { content: "▾ "; }
+details.entity-group:not([open]) > summary { margin-bottom: 0; }
+
+/* ---------- Module groups (architecture block, large designs) ----------
+   Past about eight components a roster stops being a lookup and becomes a wall: the reader
+   holds ten unrelated names in their head and reassembles the system themselves. So a large
+   design splits its components into MODULES by purpose — each one a mini system design with
+   its own board and its own two-to-four-row table — and `.module-wrap` holds the set.
+
+   The nesting is two deep on purpose and the two levels must not look alike. `.module-group`
+   is a titled subsection and takes the rank-4 title rules above, with the ▸/▾ riding the h4
+   for the reason `.endpoint-group` states: the heading is a block, so a marker on the summary
+   box would sit on a line of its own. `.module-wrap` is NOT a title — the rank-3 "Components
+   & communication" heading and the assembly board above it already say what is inside — so it
+   borrows `.entity-group`'s disclosure styling, which exists for exactly this collision. */
+details.module-wrap { margin: 0 0 var(--space-6); }
+details.module-wrap > summary {
+  font-family: var(--font-mono);
+  font-size: var(--text-sm);
+  font-weight: 600;
+  letter-spacing: 0.02em;
+  color: var(--band-color);
+  list-style: none;
+  cursor: pointer;
+  margin: var(--space-4) 0 var(--space-4);
+}
+details.module-wrap > summary::-webkit-details-marker { display: none; }
+details.module-wrap > summary::before { content: "▸ "; }
+details.module-wrap[open] > summary::before { content: "▾ "; }
+details.module-wrap:not([open]) { margin-bottom: 0; }
+details.module-wrap:not([open]) > summary { margin-bottom: 0; }
+/* Indented as a set, so seven folds read as the contents of the wrapper rather than as seven
+   siblings of the heading above it. The rule is the left edge the wrapper draws down its list. */
+details.module-wrap[open] > details.module-group {
+  margin: 0 0 var(--space-5);
+  padding-left: var(--space-4);
+  border-left: 1px solid var(--line);
+}
+/* A module's own board and roster sit inside the fold, so they carry the group's spacing
+   rather than the block-level spacing a figure gets as a child of the section. */
+details.module-group > figure.diagram,
+details.module-group > .table-scroll { margin: var(--space-4) 0; }
+
+/* The arithmetic cell of a sizing table. A formula wraps rather than forcing the whole table
+   into horizontal scroll: four columns of arithmetic that scroll sideways are four columns
+   nobody reads. Quantities that must not split carry &nbsp; in the markup. */
+table.decision td code { overflow-wrap: break-word; }
 
 /* ---------- Relationships and fluency tie-in ----------
    One card, two blocks. A typed relation and a theme tie-in are the same thing to read —
@@ -757,6 +1005,20 @@ table.decision th {
 }
 table.decision td a { color: var(--band-color); }
 .table-scroll { overflow-x: auto; }
+
+/* A decision cell whose answer is a NAME plus its justification — the technology roster on a
+   design page. The name is a title, not a run-in label: it goes on its own line so the column
+   scans as a list of choices, and it takes `--stress` for the same theme-parity reason the
+   question stems above do (9.2:1 light, 9.3:1 dark, where --band-color would read weaker than
+   the prose beneath it on light paper). Weight 700 over the 600 of a plain <strong>, so the
+   distinction survives without the colour. A cell may carry more than one where one component
+   genuinely needs two products. */
+table.decision td .tech-name {
+  display: block;
+  color: var(--stress);
+  font-weight: 700;
+}
+table.decision td .tech-name ~ .tech-name { margin-top: 0.5rem; }
 
 .tour { display: flex; flex-direction: column; gap: 1rem; }
 .tour-step {

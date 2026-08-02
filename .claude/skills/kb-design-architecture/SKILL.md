@@ -89,7 +89,7 @@ One primary diagram: `flowchart TB` for a `system-design` page, `classDiagram` f
 `low-level-design` kata. How to draw it — node cap, edge labels, `:::ext` dashing — is
 diagram-draw's contract (see below). What this skill adds is naming discipline: **every
 node label must be a name the entities, interface or sizing blocks already use**, and
-every node must reappear as a bullet in the components walk. A box that gets no bullet
+every node must reappear as a row in the components walk. A box that gets no row
 is scope creep; a name the rest of the page never uses is a second vocabulary.
 
 ### 3. Components & communication
@@ -107,6 +107,73 @@ payload wording reuses the interface block's verbs and status codes.
 
 The table is a **sibling** of the `.prose` div, like a figure — close the prose after the
 heading, emit the table, reopen prose for the trace.
+
+**Past about eight rows the flat table stops working, and the answer is modules.** A roster
+is a lookup only while the reader already knows which component they want. At ten rows of
+50-word cells it is a wall: nothing on it says which components work together as a unit, so
+the reader holds ten unrelated names in their head and reassembles the system themselves.
+Split the components into **modules by purpose** — each one a small design you could build
+on its own — and the block becomes summary, assembly board, then one fold per module:
+
+```html
+<div class="prose">
+  <h3 id="architecture-h-components">Components &amp; communication<span class="subline">seven modules, each one a design you could build on its own</span></h3>
+  <p>Each module named in one clause, then the sentence saying how they assemble.</p>
+</div>
+<figure class="diagram">…the assembly board: one node per module…</figure>
+<details class="module-wrap" id="architecture-modules">
+  <summary>the seven modules, one at a time</summary>
+  <details class="module-group" id="architecture-mod-ingress">
+    <summary><h4 id="architecture-h-mod-ingress">1 · Ingress — one door, one commit<span class="subline">the API, the inbox, the log and the work it queues</span></h4></summary>
+    <div class="prose">
+      <p><strong>What it is for.</strong> … and what breaks without it.</p>
+      <p><strong>How it works.</strong> … in the board's own order.</p>
+    </div>
+    <figure class="diagram">…this module's L2 board…</figure>
+    <div class="table-scroll"><table class="decision">…this module's 2–4 rows…</table></div>
+  </details>
+  <!-- one per module -->
+</details>
+```
+
+Five rules make it a summary rather than a hiding place:
+
+- **The contract does not change**: every board node still gets exactly one roster row, in
+  exactly one module's table. A component two modules use is filed under the one that owns
+  it and named in the other's prose. Nothing is dropped because it was awkward to place.
+- **The assembly board stays open.** Summary paragraph and assembly board are visible; only
+  the per-module detail folds. One node per module, edges labelled with what actually
+  crosses between them, and the same ≤8-node cap as any other board.
+- **Reuse is drawn, not asserted.** A module that consumes another draws it as a single node
+  carrying that module's exact title — `Vendor leg — the reusable outbound call (module 2)`.
+  Shared names are the only cross-reference mechanism the diagrams have.
+- **The module boards keep the L1 names.** A module board is an L2 zoom, so its nodes are
+  the names the L1 board, the entities block and the interface block already use.
+- **Boundaries are subgraphs, and their titles are short.** The two worth drawing are the
+  rows that commit together (`ONE TRANSACTION — all four rows, or none`) and the trust zone
+  (`Private network — egress only`, `PII plane — separate credentials`). Draw both on the
+  assembly board too, at module altitude — a boundary stated in a node's label while the
+  neighbouring boundary gets a box reads as the lesser of the two, and the reader asks where
+  it went. Nest them: the transaction is inside the perimeter, never beside it. Where a module has
+  no transaction box, say in the caption that the absence is the claim — one row per commit,
+  or no transaction possible across an HTTP call. Keep every cluster title under about 45
+  characters and put the argument in the `<figcaption>`: mermaid lays two clusters of one
+  rank side by side and their titles overlap into each other, which the build cannot see
+  because the diagram still parses. One cluster gets the full width; two do not.
+- **A trust boundary is only drawn if something visibly crosses it.** One `:::ext` node
+  lumping "client · onboardee · vendors" makes the boundary decorative — the reader cannot
+  see the callers arrive on one side and the third parties get called on the other. Give
+  each audience its own dashed node outside the box, and draw the crossings as thick edges
+  (`==>`, which renders at 3.5px against 1px) labelled for what they are: `EGRESS — the only
+  calls that leave the private network`. Then the eye finds the perimeter before it reads a
+  word.
+- **Ids are hand-minted** (`architecture-mod-*`, `architecture-h-mod-*`): the build mints no
+  heading id in `architecture` and reaches nothing inside a `<summary>`. Ship both levels
+  **closed**; `sketch.js`'s floating Expand-all drives them, and the markup is styled by
+  `details.module-wrap` / `details.module-group` in `pattern.css`.
+
+Exemplar: `persona-identification`. Everything below — the trace, the dives, the wording
+rules — is unchanged by the split.
 
 ### 4. Where each requirement lands
 
@@ -274,8 +341,9 @@ blocks are being reworked on purpose.
 2. Walk the requirements block top to bottom: does every FR have a line under "Where
    each requirement lands", and every NFR a dive heading tag? This is the check that
    does the work.
-3. Does every board node get a components bullet, and does every bullet's name appear
-   in entities, interface or sizing?
+3. Does every board node get a components row — in exactly one module's table where the
+   block is split into modules — and does every row's name appear in entities, interface
+   or sizing?
 4. Does every dive open with a bold thesis, reject at least one option, and carry its
    own diagram — zoomed nodes keeping their exact L1 names?
 5. Middot pattern labels on the board, real links in prose, and

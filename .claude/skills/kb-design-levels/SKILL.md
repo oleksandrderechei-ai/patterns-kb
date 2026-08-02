@@ -19,7 +19,7 @@ that are visibly present or visibly absent.
   <div class="prose">
     <h3>Mid-level</h3>
     <ul>
-      <li>One demonstrable behaviour.</li>
+      <li><details class="claim"><summary>One demonstrable behaviour</summary><p>The answer that backs it.</p></details></li>
       …
     </ul>
 
@@ -44,6 +44,47 @@ structure. The discipline below is this skill's job, not the build's.
 
 `levels` is optional (`OPTIONAL_BLOCKS` in [`scripts/lib/model.mjs`](../../scripts/lib/model.mjs)).
 Omit it rather than fill it with generic advice.
+
+## The stem and the answer
+
+A bullet is two things at once, and only one of them is the rubric. The **behaviour** is
+what the reader ticks themselves off against; the **answer** is what this page says a person
+demonstrating it would actually produce. Both are worth having — an unanswered rubric grades
+nothing, because "names every duplicate entry point" is a bar the reader cannot mark
+themselves against without knowing there were four. So the answer stays, and it goes behind
+a disclosure:
+
+```html
+<li><details class="claim"><summary>Prices the per-flow lane rather than presenting it as free</summary>
+<p>One lane per flow buys ordering with head-of-line blocking, so a failing endpoint delays
+that flow's later verdicts. …</p></details></li>
+```
+
+- **The summary is the whole behaviour, and nothing else.** One line, verb-first, third
+  person, no trailing clause the disclosure is about to repeat. Front-load the words the
+  reader is scanning for — "Separates deduplication from ordering", not "Understands why the
+  two concerns that both look like duplicate handling need different mechanisms".
+- **The summary never gives the answer away.** "Names every place a duplicate can enter",
+  not "Names all four" — the count is the thing behind the triangle.
+- **The answer is one `<p>`**, and it opens with the answer itself. The old shape ran a
+  `<strong>The answer</strong>` label inline; the disclosure IS that label now, so the
+  run-in comes off.
+- **Nothing is hidden from search.** A closed `<details>` keeps its content in the DOM, so
+  Ctrl+F, the crawler and `kb.mjs get` all still see the answer. Only the first paint is
+  short.
+- **The disclosure ships closed.** A rubric you can run down in fourteen lines is the
+  deliverable; opening one is the reader deciding they missed that bar.
+- **`data-kb-level` stays on the `<li>`**, never on the `details` or the `summary` — the
+  lens moves the whole bullet or none of it, and the build mints the `levels-li-N` id on
+  the `li`.
+
+`details.claim` shares its row rules with `details.req` in
+[`site/assets/pattern.css`](../../../site/assets/pattern.css) — same ▸/▾ affordance, same
+suppressed bullet, same indented body — so a case study carries one collapse idiom rather
+than a new one per block. The `tradeoffs` ledger uses the same class for the same reason
+([kb-design-tradeoffs](../kb-design-tradeoffs/SKILL.md)); it differs only in where the
+triangle sits, because its rows already own their marker slot. A bullet with no answer to
+give is a plain `<li>`; do not wrap an empty disclosure round it.
 
 ## The two level triples
 
@@ -133,15 +174,19 @@ the right one.
 - **Not a scoring scheme.** No points, no percentages, no "must hit 4 of 5".
 
 **Legacy note**: the corpus shape for this block is a single `<ul>` of three
-`<li><strong>Level</strong> — one long sentence</li>`. That shape stays valid; this format is
-currently applied only to `persona-identification`. Migrate another page when its levels block
-is being reworked on purpose — not as a side effect of a small edit.
+`<li><strong>Level</strong> — one long sentence</li>`. That shape stays valid; this format,
+and the `details.claim` disclosure with it, is currently applied only to
+`persona-identification`. Migrate another page when its levels block is being reworked on
+purpose — not as a side effect of a small edit. A page whose bullets are behaviours with no
+answers under them needs no disclosure at all: it is already a rubric that scans.
 
 ## Self-check
 
 1. Can a reader run down the block and check themselves off? If they have to parse a
    semicolon chain to know whether they did the thing, it is still a paragraph.
-2. Does every bullet name one behaviour, verb-first, in one line — 3-5 per level?
+2. Does every bullet name one behaviour, verb-first, in one line — 3-5 per level? Does the
+   summary carry the behaviour alone, with the answer behind the triangle and no part of it
+   leaking into the stem?
 3. Does each level list only what is new at that level, with no restatement from below?
 4. Can you point at the block that backs every bullet? Does the top level name the biggest
    flaw and price the deferred exits?

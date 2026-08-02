@@ -7,27 +7,44 @@ description: Write or review the sizing block ("Right-sizing") of a patterns-kb 
 
 **The sizing block is an argument, not arithmetic — and it is read under time pressure.**
 Its job is to get from the requirements to the *cheapest architecture that still meets
-them*. It models the ~5-minute estimation slice of an interview: written to be delivered
-in five minutes and scanned in one. Verdict first, lists over paragraphs, ~30 rendered
-lines. Every piece of infrastructure is a cost and a risk; the block earns its place by
-deciding each candidate on the record, with a reason attached.
+them*. It models the ~5-minute estimation slice of a one-hour interview, and that budget
+decides the whole shape: **a summary you can say out loud, over folds you open only when
+someone probes.** The reader who never opens a fold must still have the complete answer.
+
+That is the standing failure of this block. Fourteen capabilities, eight numbers and
+twenty-two verdicts are all worth writing, and all of them rendered flat is forty-four
+headings the presenter has to talk past to reach the point. The fix is not to cut the
+evidence — it is to put the verdict above it and fold the evidence underneath.
 
 ## The markup
 
 ```html
 <section class="doc-section" id="sizing" aria-labelledby="h-sizing" data-kb-block="sizing">
   <h2 class="doc-h" id="h-sizing">Right-sizing</h2>
+
   <div class="prose">
-    <p>Lead — the problem, the shape, the stores.</p>
-
-    <h3 id="sizing-h-capabilities">Required capabilities</h3>
-    <h4 id="sizing-cap-1">Durable transactional store<span class="subline">→ NFR: consistency</span></h4>
-    <p>What forces it, and its tier (mandatory).</p>
-
-    <h3 id="sizing-h-numbers">The numbers<span class="subline">every figure is per region</span></h3>
-    <h4 id="sizing-num-1">Writes<span class="subline">→ NFR: scale</span></h4>
-    <p>The arithmetic, ending in a bold result.</p>
+    <p>Lead — the load, and the unit every figure below is measured in.</p>
+    <ul>
+      <li><strong>Shape: event-driven, on an append-only log.</strong> Why, in one clause.</li>
+      <li><strong>Writes: ≈ 12 row-writes/s at peak</strong>, against a primary comfortable to ~100/s.</li>
+      …
+    </ul>
   </div>
+
+  <details class="sizing-group" id="sizing-group-numbers" data-kb-level="advanced">
+    <summary><h3 id="sizing-h-numbers">The numbers<span class="subline">per region</span></h3></summary>
+    <div class="table-scroll">
+      <table class="decision">
+        <thead><tr><th>Axis</th><th>The math</th><th>What it means</th><th>Routes to</th></tr></thead>
+        <tbody>
+          <tr id="sizing-num-1"><td>Writes</td>
+            <td><code>50 rows/flow × 10k flows/day ÷ 86 400 s × 2 peak =</code> <strong>≈ 12 row-writes/s</strong></td>
+            <td>Eight times under a primary comfortable to ~100 writes/s.</td>
+            <td>NFR: scale</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </details>
 </section>
 ```
 
@@ -36,62 +53,74 @@ block's verdict: "Right-sizing: how many nodes?"). The block is hand-edited HTML
 `kb.mjs` writer exists for it; the PostToolUse hook checks structure, not content. It is
 optional for `low-level-design` katas and expected on every `system-design` page.
 
-**Each part after the lead opens with an `<h3>`, not with a bold run-in paragraph.** The
-four parts are sections of an argument, and a `<p><strong>Required capabilities:</strong></p>`
-standing in for a heading gives the reader no outline, no anchor and no section-nav stop.
-Where the label carried a qualifier after an em-dash, that qualifier becomes a
-`<span class="subline">` inside the heading — the same span the problem block puts a routing
-tag in. **Hand-mint the id** (`sizing-h-capabilities`, `sizing-h-numbers`,
-`sizing-h-verdicts`, `sizing-h-limits`): the build mints ids for `.prose > p` and for a
-deep-dive `h3`, and for nothing else, and a heading with no id can never be moved by a lens.
+**The summary lives in `.prose`; each part below it is a `details.sizing-group`.** The
+class reuses the disclosure idiom `entities` and `interface` already ship — the `<h3>` IS
+the `<summary>`, and `pattern.css` puts the ▸/▾ marker on the heading rather than on the
+summary box. They ship **closed**, which is a summary rather than a hiding place only
+because the bullet list above states every verdict the folds then evidence.
 
-**And each ITEM inside those parts is a section too, not a bullet.** A capability, a
-numbers axis and a verdict all have the same three parts — a name, the requirement it
-answers, and the argument — so each is an `<h4>` naming the thing, its routing tag on the
-subline, and one `<p>`. That is what a bullet was hiding: `Durable transactional store —
-the ingress dedup row … (mandatory). → NFR: consistency.` makes the reader parse a sentence
-to find all three. Hand-mint `sizing-cap-N`, `sizing-num-N`, `sizing-verdict-N`.
+**Mint two ids per group**: `sizing-group-<part>` on the `<details>` (the address
+`kb.mjs level` moves, and what a lens prunes as a unit) and `sizing-h-<part>` on the `<h3>`
+(the citation anchor, and the `h3[id]` `section-nav.js` needs for its outline). Tag the
+lens on the `<details>` — never on the `<h3>` alone, or a lens leaves the fold's title
+standing over a pruned body.
 
-A page whose sizing argues in **tables** — `Capability | Tier | What forces it | Routes to`
-inside a `.table-scroll` — keeps them, and gains only the `<h3>` above each. A table already
-separates the three parts into columns, which is the same job the sections do.
+**Each ITEM inside a group is a table row, not an `<h4>` and a paragraph.** A capability,
+a numbers axis and a verdict all have the same three or four parts — a name, the argument,
+and the requirement it answers — and a table separates them into columns without spending
+a heading each. Every group is the same four columns wide, so the reader learns the shape
+once. Hand-mint `sizing-cap-N`, `sizing-num-N`, `sizing-verdict-N` on the `<tr>`; the build
+mints ids for `.prose > p` and `.prose` list items, so summary bullets and the closing list
+renumber themselves and table rows do not.
 
-## The five-part shape
+## The shape
 
-Inside `.prose`, in this order — lead, three lists, revisit trigger:
+Summary first, then four folds:
 
-### 1. Lead — problem, shape, stores
+### 1. Summary — the whole answer, in bullets
 
-One `<p>`, three labelled sentences. The reader gets the whole answer here; the lists
-below are the proof.
+One short `<p>` carrying the load and the unit every figure is measured in (per region,
+per shard, per tenant), then a `<ul>` of **6–8 bullets**. Each opens with a bold
+`Label: verdict` and adds a clause of reasoning **only where the verdict does not explain
+itself**. "Bought: append-only log, task table, inbox, shared rate limiters" needs no why;
+"Shape: event-driven, on an append-only log" does.
 
-- `<strong>The problem:</strong>` the load and its assumption, in one line.
-- `<strong>The shape:</strong>` **the interaction style, argued.** This is the largest
-  lever in the design and it is decided before any capacity question — synchronous
-  request/response, or event-driven (durable rows, appended events, workers). Name it
-  and give the reason in the same sentence. Reach for event-driven when any of these
-  hold, and say which: waits outlive a request (humans, vendors, batch windows); a state
-  change must be told to someone else exactly once; the history is itself a requirement
-  (audit, compliance, reconstruction); load arrives in bursts the workers should absorb.
-  When the answer is "append-only history plus materialised current state" rather than
-  full event sourcing, say so — folding state from events on every read is a cost that
-  needs its own justification.
-- `<strong>The stores:</strong>` every persistent store the shape needs, counted. Be
-  exact: a design with a separate PII vault, an object store and a coordination cache
-  has four stores, not "one database". Under-counting here is the most common way this
-  block lies.
+This list is the block's description — it is what gets scanned, quoted and said out loud,
+and it is the only part a basic-lens reader sees. Cover, in this order:
+
+- **Shape** — **the interaction style, argued.** The largest lever in the design, decided
+  before any capacity question: synchronous request/response, or event-driven (durable
+  rows, appended events, workers). Reach for event-driven when any of these hold, and say
+  which: waits outlive a request (humans, vendors, batch windows); a state change must be
+  told to someone else exactly once; the history is itself a requirement (audit,
+  compliance, reconstruction); load arrives in bursts the workers should absorb. When the
+  answer is "append-only history plus materialised current state" rather than full event
+  sourcing, say so — folding state from events on every read is a cost that needs its own
+  justification.
+- **Stores** — every persistent store the shape needs, **counted**. A design with a
+  separate PII vault, an object store and a coordination cache has four stores, not "one
+  database". Under-counting here is the most common way this block lies.
+- **The two or three headline numbers**, each already landed on its figure. Writes and
+  storage almost always; whichever third axis decides this design.
+- **The binding constraint** — the thing that caps this system first, named. It is
+  frequently not the one you measured (see part 3).
+- **Bought** — the capabilities the design actually buys, as a flat list, no reasons.
+- **Deferred** — each with its trigger in parentheses. One bullet, not one per candidate.
+
+A reader who stops here has the estimation slice. Everything below is the proof they ask
+for when they want to check it.
 
 ### 2. Required capabilities
 
-`<h3 id="sizing-h-capabilities">Required capabilities</h3>` then one section per capability —
-`<h4>` the capability, its routing tag on the subline, and a `<p>` giving the forcing
-requirement and the tier. Draw from: durable transactional store, work queue, object
-store, coordination cache, read cache, search index, stream processor, scheduler,
-encrypted PII store with key custody, rate limiting, private network. **No product or
-vendor names, ever.** A capability that traces to no requirement is speculation — leave it
-out. When the FR list is tiered (see
-[kb-design-requirements](../kb-design-requirements/SKILL.md)), close each paragraph
-`(mandatory)` or `(additional)`.
+`<details class="sizing-group" id="sizing-group-capabilities">` over a
+`Capability | Tier | What forces it | Routes to` table. Draw from: durable transactional
+store, work queue, object store, coordination cache, read cache, search index, stream
+processor, scheduler, encrypted PII store with key custody, rate limiting, private
+network. **No product or vendor names, ever.** A capability that traces to no requirement
+is speculation — leave it out. When the FR list is tiered (see
+[kb-design-requirements](../kb-design-requirements/SKILL.md)), the Tier column reads
+`mandatory` or `additional`; put the count on the summary's subline
+(`11 mandatory, 3 additional`) so the fold says how big it is before it opens.
 
 **Distinguish capabilities that share a name.** A *coordination* cache (shared breaker
 state, leases, rate-limit counters — correctness across replicas) and a *read* cache
@@ -101,10 +130,27 @@ broker: the queue is the capability, the broker is one implementation of it.
 
 ### 3. The numbers
 
-One section per axis: `<h4>` the axis (Writes, Reads, Storage), its routing tag on the
-subline, and a `<p>` carrying the arithmetic and ending in a bold result. Standard axes:
-writes, reads, storage — plus whichever of working set, fan-out, cardinality, connections,
-or latency budget actually decides this design.
+`Axis | The math | What it means | Routes to`, one row per axis. Standard axes: writes,
+reads, storage — plus whichever of working set, fan-out, cardinality, connections, or
+latency budget actually decides this design.
+
+**The math column is a formula, not a paragraph about a formula.** One `<code>`
+expression, every factor named in its own units, ending in `=` and the bolded result:
+
+```html
+<td><code>(12 appends + 12 projections + 14 task touches + 5 inbox + 5 singles
+≈ 50 rows/flow) × 10k flows/day ÷ 86 400 s × 2 peak =</code> <strong>≈ 12 row-writes/s</strong></td>
+```
+
+The formula IS the reasoning, and that is the point of the column: a reader checks
+arithmetic in seconds and prose in minutes. So **expand a composite factor inside the
+expression** rather than sourcing it in a sentence beside — `50 rows/flow` is an
+assertion, `(12 + 12 + 14 + 5 + 5 ≈ 50 rows/flow)` is a derivation. Where an axis needs
+two figures (today and year three, per-year and steady-state), write two expressions in
+the one cell rather than splitting the axis into two rows.
+
+Nothing goes in the math column but math. The consequence — the headroom, the anchor it
+is compared against, what happens to the quantity — is the next column over.
 
 - **Show where each input came from.** A factor like "25–30 rows per flow" must name
   what it counts (which tables, inserts vs updates); a peak multiplier must name the
@@ -114,9 +160,9 @@ or latency budget actually decides this design.
   number: calls to a vendor's API, row-writes into the primary, and requests hitting
   your own edge have different ceilings, different owners and different bills. Write
   "outbound vendor calls/s", "row-writes/s into Postgres", "reads/s at the edge".
-- Assumptions go inline in parentheses, not narrated. Land on a bolded figure and
-  compare against an auditable capacity anchor (a well-tuned relational node ≈ 10k
-  writes/s, one machine's RAM) where the comparison decides something.
+- Compare the bolded figure against an auditable capacity anchor (a well-tuned relational
+  node ≈ 10k writes/s, one machine's RAM) in the "What it means" column, where the
+  comparison decides something.
 - **Say what happens to the quantity, not just how big it is.** "~10k flows parked"
   invites "and then what?" — answer it in the same line (who resolves them, on what
   clock, at what cost).
@@ -134,20 +180,25 @@ or latency budget actually decides this design.
 
 ### 4. Verdict per candidate
 
-`<h3 id="sizing-h-verdicts">Verdict per candidate</h3>` then one section per candidate —
+`Candidate | Verdict | Why, and the trigger | Routes to`, one row per candidate —
 including the ones a bigger system would reflexively claim, so each decision is on the
-record. The `<h4>` names the candidate, the subline carries its routing tag, and the `<p>`
-opens with the verdict and gives **the reason in the same sentence**:
+record. The Verdict column carries one bolded word and nothing else worth reading past
+(`<strong>Adopted</strong>`, `<strong>Rejected</strong>`, `<strong>Deferred</strong>`; a
+short qualifier is allowed where it changes the meaning — "**Adopted** for correctness,
+not speed"). The Why column carries the reason:
 
-- `<strong>Adopted</strong>: what forces it.`
-- `<strong>Rejected</strong>: the number or fact that removes the need.`
-- `<strong>Deferred</strong>: not yet; the named trigger that buys it.`
+- Adopted — what forces it.
+- Rejected — the number or fact that removes the need.
+- Deferred — the named trigger that buys it, written as `Trigger: …`.
 
-**The shape is a verdict, not just a claim in the lead.** Open the list with the
-interaction style decided both ways — the rejected alternative (synchronous
-request/response) with the fact that kills it, then the adopted one. It is the largest
-decision on the page; asserting it in the lead and never deciding it on the record is
-the most common omission in this block.
+Sorting the rows adopted-then-deferred lets a reader stop at the first Deferred and know
+the rest are exits.
+
+**The shape is a verdict, not just a claim in the summary.** Give the interaction style a
+row decided both ways — the rejected alternative (synchronous request/response) with the
+fact that kills it, then the adopted one. It is the largest decision on the page;
+asserting it in the summary bullets and never deciding it on the record is the most common
+omission in this block.
 
 **Nothing named in part 2 may vanish here.** Walk the capability list and confirm each
 one either has its own verdict line or is explicitly folded into one ("queue, outbox
@@ -164,11 +215,12 @@ replay) is cheaper than resilience bought by infrastructure — prefer it and sa
 
 ### 5. When this stops being right
 
-`<h3 id="sizing-h-limits">When this stops being right<span class="subline">→ NFR: scale</span></h3>`
-then the closing `<p>`. The heading does the framing on its own (the verdicts hold for
-today's numbers; this is the tripwire that says they no longer do), so the paragraph opens
-straight on the mechanism with no preamble, and its routing tag rides the subline rather
-than trailing the last sentence. Then three things, in order, each in a sentence or two:
+The one fold that is a list rather than a table, because its three items are not the same
+shape as each other. Wrap the `<ul>` in a `<div class="prose">` so it picks up the block's
+list styling, and carry the routing tag on the heading's subline
+(`<span class="subline">→ NFR: scale</span>`) — the heading does the framing on its own
+(the verdicts hold for today's numbers; this is the tripwire that says they no longer do),
+so no item needs a preamble. Three bold-led items, in this order:
 
 1. **What wears out first, in plain language.** Name the component and the mechanism
    that degrades it — cause, then effect. Explain engine-level jargon in the sentence
@@ -180,50 +232,77 @@ than trailing the last sentence. Then three things, in order, each in a sentence
 3. **The exits in adoption order**, each an upgrade that was priced, not a rewrite.
 
 A bare threshold is not an invalidation — "breaks at ~2M" reads as arbitrary until the
-sentence says *what* breaks and *why*. End with the routing tag of the constraint the
-exits serve (usually `→ NFR: scale.`).
+item says *what* breaks and *why*.
 
 ## The routing tags
 
-Every **item** carries exactly one routing tag, on its `<h4>`'s subline (or, in a table, in
-the Routes-to column) — `→ FR: label.`, `→ NFR: label.`, or
-both joined with `;`. Plain text, never wrapped in `<em>`: the arrow and the colon already
-mark it. A tag that belongs to a whole part rather than to one item goes on that part's
-heading instead, inside its `<span class="subline">` — which is where "When this stops
-being right" carries `→ NFR: scale`. The same idiom the problem block uses
+Every **item** carries exactly one routing tag, in its row's Routes-to column —
+`FR: label`, `NFR: label`, or both joined with `;`. The column header supplies the arrow,
+so the cell does not repeat it. Plain text, never wrapped in `<em>`. A tag that belongs to
+a whole part rather than to one item goes on that part's heading instead, inside its
+`<span class="subline">`, arrow and all — which is where "When this stops being right"
+carries `→ NFR: scale`. The summary bullets carry **no** routing tags: they are the
+verdict, and tagging six of them turns the one scannable list back into the wall the folds
+exist to prevent. The same idiom the problem block uses
 (see [kb-design-problem](../kb-design-problem/SKILL.md)). The label is informal
 but must match an item the reader can find in the requirements block. Capabilities and
 verdicts route to what forces them; numbers route to the constraint they price. No
 orphan bullets: an item that routes nowhere is either speculation or a missing
 requirement.
 
+## The lenses
+
+The fold structure and the lens are the same idea applied twice, so let them agree:
+
+| | renders |
+|---|---|
+| lead + summary `<ul>` | untagged — the basic page IS the estimation slice |
+| the four `details.sizing-group` | `data-kb-level="advanced"` on the `<details>` |
+| individual rows inside a group | `expert` where the row is depth the advanced reader can skip |
+
+A basic reader gets eight bullets and no folds; an advanced one gets the folds with their
+long tail pruned; an expert gets everything. `make check` demands content at every lens,
+and the untagged summary is what satisfies it — which is also why the summary can never be
+tagged up a level.
+
 ## Style rules
 
-- **One paragraph per item.** A second clause is allowed after a semicolon; a second
-  argument means it is two items.
+- **One sentence per cell where one will do.** A second clause is allowed after a
+  semicolon; a second argument means it is two rows.
 - **Strike connector words** — "which is why", "that is", "so", "in other words". The
-  `label — evidence` juxtaposition does the work.
+  column juxtaposition does the work a connector used to.
 - **Results bold, assumptions in parentheses**, jargon only where it is the exact term —
   and then explained on first use.
-- **The two paragraphs are prose, and the same rules bind them.** In the lead, each
-  labelled sentence stands alone and carries its reason, so the reader can stop after any
-  one of them. In "When this stops being right", write cause then effect in that order,
-  one mechanism per sentence — a sentence carrying two mechanisms hides which one wears
-  out first.
+- **Summary bullets and the closing list are prose, and the same rules bind them.** Each
+  bullet stands alone and carries its reason, so the reader can stop after any one of
+  them. In "When this stops being right", write cause then effect in that order, one
+  mechanism per item — an item carrying two mechanisms hides which one wears out first.
 
 ## Worked example
 
-From `persona-identification` — the write rate is ~3/s at the design target:
+From `persona-identification` — a broker is deferred rather than bought:
 
 > ❌ *Flows are queued in Kafka and hot state lives in Redis, so the system scales to
 > any load.* — two vendors, neither justified by a number; "any load" prices nothing.
 
-> ✅ *Message broker — deferred: 5–6 writes/s peak fits a task table in the same store,
-> and the task insert shares the state change's transaction; trigger is sustained 100k
-> flows/day. → NFR: scale.*
+> ✅ `Message broker | **Deferred** | It buys throughput this system does not need and pays
+> with the shared transaction that makes the guarantee. Trigger: measured task-table churn,
+> roughly sustained 100k flows/day. | NFR: scale`
 
 The ❌ buys infrastructure first and justifies never; the ✅ decides it with a number,
-keeps it as a triggered exit, and routes to the constraint it prices — in one line.
+keeps it as a triggered exit, and routes to the constraint it prices — in one row.
+
+And the same page's writes axis, showing what the math column is for:
+
+> ❌ *Count what one flow commits — ~12 appends, a projection update behind each, 7 task
+> rows touched twice, ~5 inbox rows, and single rows for the idempotency key, the invite
+> key, the document and two audit entries. Call it 50. At the 10k/day target, doubled for
+> business-hours bunching, that is ≈ 6 row-writes/s, ~12/s peak.* — four sentences to reach
+> a figure a formula states in one line, and the reader must trust the addition rather than
+> see it.
+
+> ✅ `(12 appends + 12 projections + 14 task touches + 5 inbox + 5 singles ≈ 50 rows/flow)
+> × 10k flows/day ÷ 86 400 s × 2 peak =` **≈ 12 row-writes/s**
 
 ## Consistency with the rest of the page
 
@@ -248,27 +327,35 @@ Upstream, the numbers come from [kb-design-requirements](../kb-design-requiremen
 in [kb-design-problem](../kb-design-problem/SKILL.md) — a sizing block that has to invent
 its own volumes means the problem block didn't ask.
 
-**Legacy note**: pages written before this shape use 3–7 prose paragraphs with bold
-lead-ins. They are valid until touched; migrate a page to the five-part shape whenever
-its sizing block is edited.
+**Legacy note**: two older shapes are in the corpus. Most pages use 3–7 prose paragraphs
+with bold lead-ins; `persona-identification` briefly used `<h3>` parts over `<h4>`-per-item
+sections, which is what produced the forty-four-heading wall this shape replaces. Both are
+valid until touched; migrate a page to summary-over-folds whenever its sizing block is
+edited. Migrating is mostly mechanical — an `<h4>` plus its `<p>` becomes one `<tr>`, and
+the reasoning you delete from a numbers paragraph is reasoning the formula now carries.
 
 ## Self-check
 
-1. Scan test: after 15 seconds, can a reader state the problem, the shape and the
-   stores? If the verdict is not in the first paragraph, it fails.
-2. Is the interaction shape named *and argued*, and is the store count exact — every
+1. Scan test: after 15 seconds of the summary alone, can a reader state the shape, the
+   store count, the headline numbers and what binds first? A fold that has to be opened
+   to get the answer means the summary is incomplete, not that the fold is wrong.
+2. Read the summary out loud. Under 90 seconds, and does every bullet whose verdict is not
+   self-evident carry its one clause of why — with none of the self-evident ones padded?
+3. Is the interaction shape named *and argued*, and is the store count exact — every
    vault, blob store and coordination cache counted?
-3. Does every numbers line show where its factors came from, and does every quantity
-   say what happens to it?
-4. Does every candidate get adopted, rejected or deferred **with a reason** — deferred
+4. Is every math cell a formula that ends in its result, with composite factors expanded
+   inside the expression rather than sourced in a sentence next to it? Does anything but
+   arithmetic appear in that column?
+5. Does every candidate get adopted, rejected or deferred **with a reason** — deferred
    ones carrying a named trigger, nothing kept "to be safe"? This is the check that does
    the work.
-5. Does every item carry a routing tag that resolves to a findable FR or NFR?
-6. Do the verdicts agree with the `architecture` block's technology table?
-7. Does the closing paragraph say what it is for, name the mechanism in plain language,
-   and give an observable signal — not just a threshold?
-8. `make all && make check`, then `node scripts/kb.mjs get <id> --block sizing` — the
-   output should scan as: problem+shape+stores, capabilities, numbers, verdicts, tripwire.
-9. Does each part after the lead open with an `<h3>` carrying a hand-minted `sizing-h-*`
-   id, rather than with a bold run-in paragraph — and does each heading's `data-kb-level`
-   match the list under it, so a lens never leaves a heading standing over nothing?
+6. Does every row carry a routing tag that resolves to a findable FR or NFR, and do the
+   summary bullets carry none?
+7. Do the verdicts agree with the `architecture` block's technology table?
+8. Does the closing list name the mechanism in plain language and give an observable
+   signal — not just a threshold?
+9. Does each fold carry `sizing-group-*` on the `<details>`, `sizing-h-*` on the `<h3>`,
+   and its `data-kb-level` on the `<details>` rather than on the heading?
+10. `make all && make check`, then `node scripts/kb.mjs get <id> --block sizing --level basic`
+    — basic should return the lead and the bullets and nothing else. Then read it at
+    `--level advanced` and confirm the folds are there.

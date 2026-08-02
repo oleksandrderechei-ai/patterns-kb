@@ -106,18 +106,13 @@
       "kb:note": "transient job failures are absorbed by spacing retries out exponentially instead of hammering"
     },
     {
-      "@id": "../../../designs/persona-identification.html#persona-identification",
-      "name": "Persona Identification & Sanction Check",
-      "kb:note": "backing off vendor calls and webhook delivery attempts in a persona-verification saga before giving up to a DLQ"
-    },
-    {
       "@id": "../../../designs/gopuff.html#gopuff",
       "name": "Gopuff",
       "kb:note": "bounding the replay is what stops contention on a promoted item becoming a retry storm"
     },
     {
-      "@id": "../../../designs/persona-identification-v2.html#persona-identification-v2",
-      "name": "Persona Identification & Sanction Check (V2)",
+      "@id": "../../../designs/persona-identification.html#persona-identification",
+      "name": "Persona Identification & Sanction Check",
       "kb:note": "backoff with jitter argued from the recovery it belongs to, where the alternative is a synchronised stampede at the end of a six-hour outage"
     }
   ],
@@ -461,9 +456,8 @@ function isTransient(err: unknown): boolean {
           <div class="rel-item" data-kb-rel="demonstrated-by" data-kb-to="web-crawler"><a href="../../../designs/web-crawler.html">Web Crawler</a><span class="rel-note">transient fetch failures are retried with growing delays instead of hammering a struggling origin</span></div>
           <div class="rel-item" data-kb-rel="demonstrated-by" data-kb-to="payment-system"><a href="../../../designs/payment-system.html">Payment System</a><span class="rel-note">unreliable server-to-server delivery is a textbook case for capped exponential retry</span></div>
           <div class="rel-item" data-kb-rel="demonstrated-by" data-kb-to="job-scheduler"><a href="../../../designs/job-scheduler.html">Job Scheduler</a><span class="rel-note">transient job failures are absorbed by spacing retries out exponentially instead of hammering</span></div>
-          <div class="rel-item" data-kb-rel="demonstrated-by" data-kb-to="persona-identification"><a href="../../../designs/persona-identification.html">Persona Identification &amp; Sanction Check</a><span class="rel-note">backing off vendor calls and webhook delivery attempts in a persona-verification saga before giving up to a DLQ</span></div>
           <div class="rel-item" data-kb-rel="demonstrated-by" data-kb-to="gopuff"><a href="../../../designs/gopuff.html">Gopuff</a><span class="rel-note">bounding the replay is what stops contention on a promoted item becoming a retry storm</span></div>
-          <div class="rel-item" data-kb-rel="demonstrated-by" data-kb-to="persona-identification-v2"><a href="../../../designs/persona-identification-v2.html">Persona Identification &amp; Sanction Check (V2)</a><span class="rel-note">backoff with jitter argued from the recovery it belongs to, where the alternative is a synchronised stampede at the end of a six-hour outage</span></div>
+          <div class="rel-item" data-kb-rel="demonstrated-by" data-kb-to="persona-identification"><a href="../../../designs/persona-identification.html">Persona Identification &amp; Sanction Check</a><span class="rel-note">backoff with jitter argued from the recovery it belongs to, where the alternative is a synchronised stampede at the end of a six-hour outage</span></div>
         </div>
       </div>
 

@@ -166,11 +166,6 @@
       "kb:note": "correctness under retries depends entirely on making a repeated execution harmless"
     },
     {
-      "@id": "../../designs/persona-identification.html#persona-identification",
-      "name": "Persona Identification & Sanction Check",
-      "kb:note": "deduping vendor callbacks and webhook retries in a persona-verification saga so a redelivered message never double-applies a result"
-    },
-    {
       "@id": "../../designs/gopuff.html#gopuff",
       "name": "Gopuff",
       "kb:note": "a rapid-delivery checkout replays its whole serializable transaction on abort, and the key is what makes the replay safe"
@@ -186,8 +181,8 @@
       "kb:note": "an offline-first client retries its sync freely because the append is deduped server-side by activity and point"
     },
     {
-      "@id": "../../designs/persona-identification-v2.html#persona-identification-v2",
-      "name": "Persona Identification & Sanction Check (V2)",
+      "@id": "../../designs/persona-identification.html#persona-identification",
+      "name": "Persona Identification & Sanction Check",
       "kb:note": "a case study that prices the pattern's limit: at-least-once transport plus an idempotent effect is exactly-once in effect only where both ends are yours"
     }
   ],
@@ -567,11 +562,10 @@ res.status(result.status).json(result.body);</code></pre>
           <div class="rel-item" data-kb-rel="demonstrated-by" data-kb-to="robinhood"><a href="../../designs/robinhood.html">Robinhood</a><span class="rel-note">the dedup key makes retries safe across a boundary that may already have acted on the first attempt</span></div>
           <div class="rel-item" data-kb-rel="demonstrated-by" data-kb-to="payment-system"><a href="../../designs/payment-system.html">Payment System</a><span class="rel-note">the double-charge-on-timeout scenario is the canonical motivation for idempotent writes</span></div>
           <div class="rel-item" data-kb-rel="demonstrated-by" data-kb-to="job-scheduler"><a href="../../designs/job-scheduler.html">Job Scheduler</a><span class="rel-note">correctness under retries depends entirely on making a repeated execution harmless</span></div>
-          <div class="rel-item" data-kb-rel="demonstrated-by" data-kb-to="persona-identification"><a href="../../designs/persona-identification.html">Persona Identification &amp; Sanction Check</a><span class="rel-note">deduping vendor callbacks and webhook retries in a persona-verification saga so a redelivered message never double-applies a result</span></div>
           <div class="rel-item" data-kb-rel="demonstrated-by" data-kb-to="gopuff"><a href="../../designs/gopuff.html">Gopuff</a><span class="rel-note">a rapid-delivery checkout replays its whole serializable transaction on abort, and the key is what makes the replay safe</span></div>
           <div class="rel-item" data-kb-rel="demonstrated-by" data-kb-to="youtube"><a href="../../designs/youtube.html">YouTube</a><span class="rel-note">A video pipeline keyed on the upload event replays safely because the trigger is idempotent</span></div>
           <div class="rel-item" data-kb-rel="demonstrated-by" data-kb-to="strava"><a href="../../designs/strava.html">Strava</a><span class="rel-note">an offline-first client retries its sync freely because the append is deduped server-side by activity and point</span></div>
-          <div class="rel-item" data-kb-rel="demonstrated-by" data-kb-to="persona-identification-v2"><a href="../../designs/persona-identification-v2.html">Persona Identification &amp; Sanction Check (V2)</a><span class="rel-note">a case study that prices the pattern's limit: at-least-once transport plus an idempotent effect is exactly-once in effect only where both ends are yours</span></div>
+          <div class="rel-item" data-kb-rel="demonstrated-by" data-kb-to="persona-identification"><a href="../../designs/persona-identification.html">Persona Identification &amp; Sanction Check</a><span class="rel-note">a case study that prices the pattern's limit: at-least-once transport plus an idempotent effect is exactly-once in effect only where both ends are yours</span></div>
         </div>
       </div>
 

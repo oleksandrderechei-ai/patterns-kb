@@ -111,6 +111,24 @@ function render(el, out = []) {
     if (tag === "p") { out.push(`\n${inline(c)}\n`); continue; }
     if (tag === "li") {
       const id = c.getAttribute("id");
+      // A requirement folded into a disclosure — `<li><details class="req"><summary>stem
+      // </summary><p>the full sentence</p></details></li>` — welds exactly like a rel-item
+      // does: the stem and the sentence are adjacent elements with no separator of their
+      // own, so inline() yields "…email addressA client starts…". Join them on the same
+      // em-dash the rel-item branch uses. The `summary` case further down never sees these,
+      // because this branch owns the whole <li>.
+      const fold = c.childNodes.find((n) => n.nodeType === 1 && n.tagName?.toLowerCase() === "details");
+      if (fold) {
+        const sum = fold.querySelector("summary");
+        const body = fold.childNodes
+          .filter((n) => n !== sum)
+          .map((n) => n.text)
+          .join(" ")
+          .replace(/\s+/g, " ")
+          .trim();
+        out.push(`- ${id ? `[${id}] ` : ""}${sum ? inline(sum) : ""}${body ? ` — ${body}` : ""}\n`);
+        continue;
+      }
       // An item may carry a nested list (e.g. an NFR label with its points); without
       // this, inline() welds the sublist into one unreadable line.
       const sub = c.childNodes.find((n) => n.nodeType === 1 && /^(ul|ol)$/i.test(n.tagName ?? ""));

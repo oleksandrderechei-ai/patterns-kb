@@ -23,14 +23,16 @@ flaw, a Strengths column, a Risks column.
     <div class="col pros">
       <h3>Strengths</h3>
       <ul>
-        <li><strong>Short claim.</strong> One sentence of substance.</li>   <!-- main -->
+        <li><details class="claim"><summary><strong>Short claim.</strong></summary>
+            <p>One sentence of substance.</p></details></li>              <!-- main -->
         <li>One plain sentence.</li>                                       <!-- additional -->
       </ul>
     </div>
     <div class="col cons">
       <h3>Risks</h3>
       <ul>
-        <li><strong>Short claim.</strong> One sentence, at most a pointer (see dive 4).</li>
+        <li><details class="claim"><summary><strong>Short claim.</strong></summary>
+            <p>One sentence, at most a pointer (see dive 4).</p></details></li>
         <li>One plain sentence.</li>
       </ul>
     </div>
@@ -64,6 +66,46 @@ does not. A strength that is true only if something else goes right belongs in R
 What the design accepts, stated as the bad thing itself. Each item says what breaks,
 stalls, or costs — and stops. If a risk was taken deliberately, one clause may say so
 ("a procurement lever, not an engineering one"); it may not grow a rebuttal.
+
+### The claim and the fact behind it
+
+A main point is two things: the **claim**, which is the line a reader scanning the ledger
+stops on, and the **fact**, which is what they read only for the ones they stop on. Two
+columns of seven full sentences is not a ledger scannable in thirty seconds — it is the
+essay this block exists not to be. So the claim stays open and the fact goes behind a
+disclosure:
+
+```html
+<li><details class="claim"><summary><strong>Per-flow lanes serialize a hot flow.</strong></summary>
+<p>Ordering is bought with head-of-line blocking, so a failing client endpoint delays that
+flow's own later verdicts for up to a day before the lane dies (see dive 2).</p></details></li>
+```
+
+- **The summary is the claim alone** — the same short `<strong>` fragment the open shape
+  used, ending at its full stop. Nothing else goes in it: a summary carrying half the fact
+  defeats the scan and repeats itself on open.
+- **The fact is one `<p>`**, unchanged from the open shape, pointer included.
+- **Only main points take a disclosure.** An additional item is already one plain sentence
+  with no bold and nothing behind it; wrapping it produces a control that reveals nothing.
+- **Never put the `<strong>` outside the `<summary>`.** The column colour comes from
+  `.pros/.cons summary > strong:first-child` in `pattern.css`, so a claim that is not the
+  summary's first child never colours — the same rule as the open shape, one level in.
+- **A closed claim is plain ink; colour arrives when it opens.** Fourteen coloured claims
+  sitting closed is a wall of green and red in which nothing ranks, which is the opposite of
+  what colouring the claim was for. The ✓/✕ stays coloured either way and carries the
+  polarity. This is CSS, not something to write per item — never add a class to chase it.
+- **Nothing is hidden from search.** A closed `<details>` keeps its text in the DOM, so
+  Ctrl+F, the crawler and `kb.mjs get` still return the fact and every `(see dive N)`
+  pointer in it.
+- **The `<li>` keeps everything the build stamps.** `id` and `data-kb-polarity` are still
+  written positionally onto the `li`, so `…#tradeoffs-con-3` citations survive the change;
+  never move them onto the `details`.
+
+`details.claim` is the [kb-design-levels](../kb-design-levels/SKILL.md) row, shared. The one
+difference is the triangle's position: it sits **after** the claim here rather than
+replacing the bullet, because a trade-off row's marker slot already holds the ✓/✕ — the
+polarity glyph, and the only non-colour channel telling a reader which column they are in.
+`pattern.css` handles that; there is nothing to write per item.
 
 ### Limits — both columns
 
@@ -136,9 +178,10 @@ mismatch rather than silently editing it from here.
 
 **Legacy note**: the standard corpus shape for this block is `What it buys` / `What it
 gives up` with 3–4 plain items per column. That shape stays valid; the Strengths/Risks
-format is currently applied only to `persona-identification`. Migrate another page to it
-only when its tradeoffs block is being reworked on purpose — not as a side effect of a
-small edit.
+format, and the `details.claim` disclosure with it, is currently applied only to
+`persona-identification`. Migrate another page to it only when its tradeoffs block is being
+reworked on purpose — not as a side effect of a small edit. A column of three plain
+one-liners needs no disclosure at all: it already scans.
 
 ## Self-check
 
@@ -146,7 +189,9 @@ small edit.
    design wins, and the three things it accepts? If any item needs re-reading, it fails.
 2. Is the lead ≤2 sentences, and is its flaw the one the levels block defends?
 3. Does each column hold ≤7 flat items — 3–4 bold-led main points first, plain one-liners
-   after — with no hand-written `id`/`data-kb-polarity`?
+   after — with no hand-written `id`/`data-kb-polarity`? Where main points use the
+   disclosure, is the `<strong>` claim the summary's first child, and is the summary the
+   claim alone?
 4. Is every item one sentence stating a fact, with mitigation as at most a pointer that
    resolves to a real dive or Right-sizing exit?
 5. Did any reorder or merge happen — and if so, were `#tradeoffs-con-N` anchors and

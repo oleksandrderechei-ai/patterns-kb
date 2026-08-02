@@ -40,7 +40,9 @@ digits nobody refers to. Never mix the two on one page.
 - **Exactly one sentence per `<li>`.** If a second sentence is forming, it is a second
   requirement — split it.
 - **Plain text only.** No `<strong>`, `<em>`, `<br>`, `<code>` inside FR items. If a word
-  needs bolding to be understood, the sentence is carrying too much.
+  needs bolding to be understood, the sentence is carrying too much. The one structural
+  exception is the `details.req` fold below, which adds no markup to the sentence itself —
+  it puts a scannable stem in front of it, and it is barred from the mandatory tier.
 - **One observable behaviour per item.** "X happens, and separately Y happens" is two FRs.
 - **Capability, not mechanism.** Actors and channels given by the task statement may be
   named (the external ID-verification provider, a webhook, the dashboard). Solution
@@ -81,6 +83,14 @@ A long FR list may split into two tiers when the design has a clear minimum prod
   makes the reader parse a sentence to find a two-word label.
 - **The mandatory tier must stand alone** — a deployment meeting only it is a complete,
   correct product. If striking an item breaks the core promise, it is mandatory.
+- **The mandatory tier is never collapsible, and its requirements are never folded.** Its
+  heading is a plain `<h4>` and its items are plain full sentences: no
+  `details.req-tier` around the tier, no `details.req` inside it, and no
+  `data-kb-level` on either — a mandatory requirement is visible at every lens and at
+  first paint, with no click between the reader and the promise. `open` is not good
+  enough: a disclosure that starts open still offers to put the core away, and the
+  minimum product is the one part of the ledger that may not be put away. Everything
+  compactable is BELOW it.
 - **Additional items must be additive** — recurrence, audit surface, governance — and
   the split earns its keep only when paired with an **Evolvability** NFR stating that
   additional obligations attach without redesigning the core.
@@ -89,6 +99,69 @@ A long FR list may split into two tiers when the design has a clear minimum prod
 - The sizing block should then trace capabilities per tier: what the mandatory core
   forces vs what the additional tier adds (see
   [kb-design-sizing](../kb-design-sizing/SKILL.md)).
+
+### Folding a long ledger — `details.req` (optional)
+
+**Only reach for this past roughly 12 FRs or 6 NFR sections.** Below that the flat list
+already scans, and a disclosure just puts a click between the reader and a five-item list.
+`persona-identification` is the corpus's one case: 23 FRs and 8 NFR sections, where every
+row is a full sentence, so nothing scanned and you could not see the shape of the promise
+without reading all of it.
+
+**Fold the tiers below mandatory, never the mandatory tier itself** (see the rule above).
+On that page the 12 mandatory FRs are a plain `<h4>` over a plain list, and the 11
+additional ones plus all 8 NFR sections fold.
+
+Three disclosures, all reusing the summary-wraps-a-heading move `details.entity-group` and
+`details.sizing-group` already make, so a case study has ONE collapse idiom:
+
+```html
+<h4>Mandatory<span class="subline">the product promise</span></h4>   <!-- never a <details> -->
+<ul>
+  <li id="requirements-fr-3">A repeated create for the same open client-and-email pair
+      returns the existing flow rather than starting a second one.</li>
+</ul>
+
+<details class="req-tier" id="requirements-tier-additional" data-kb-level="advanced">
+  <summary><h4 id="requirements-h-additional">Additional<span class="subline">ongoing obligations</span></h4></summary>
+  <ul>
+    <li id="requirements-fr-13" data-kb-level="advanced">
+      <details class="req">
+        <summary>Failure reaches the client on the result channel</summary>
+        <p>A flow that cannot proceed produces a failure event the client receives on
+           the same channel as a result.</p>
+      </details>
+    </li>
+  </ul>
+</details>
+
+<details class="nfr">
+  <summary><h4 id="requirements-nfr-1">Consistency</h4></summary>
+  <ul> … </ul>
+</details>
+```
+
+- **The fold compacts; it never adds.** The `<p>` is the requirement sentence you would
+  have written anyway, unchanged and still governed by every rule above. The `<summary>`
+  is a new 4–7 word stem — a noun-or-verb phrase, no trailing full stop, plain text, and
+  no jargon the sentence itself avoids. Never write detail into the fold that the flat
+  list would not have carried: elaboration on *why* a requirement exists belongs in
+  `deepdives`, and the fold is not a loophole around that.
+- **A stem is not a truncation.** "A repeated create is not a second flow" beats "A
+  repeated create for the same open…" — the stem states the requirement in short, so a
+  reader who never opens the row has still read something true and complete.
+- **Nothing is hidden from a crawler or a Ctrl+F.** A closed `<details>` keeps its content
+  in the DOM, so the full sentence is still indexed and still findable. Only the first
+  paint is short — which is the entire point, and the reason this is a disclosure rather
+  than a rewrite that drops the sentences.
+- **Every fold starts closed, because the mandatory tier is not a fold at all.** The
+  reader meets the core promise as open prose and drills into the rest.
+- **Ids do not move.** `requirements-fr-N` stays on the `<li>` and `requirements-nfr-N` on
+  the `<h4>`, so every `data-kb-level` tag, citation and lens tag survives the fold
+  untouched. `build-pages.mjs` lists all three shapes (`div.nfr`, `details.nfr` and the
+  legacy bold row) and `kb.mjs` renders a folded row as `stem — sentence`.
+- **Do not fold `Out of scope`.** Its items are already a bold label plus a reason, which
+  is the compact shape this section is reaching for.
 
 ## Non-functional requirements — labelled constraints with numbers
 
@@ -111,9 +184,9 @@ A long FR list may split into two tiers when the design has a clear minimum prod
   sublist level; anything deeper welds into an unreadable line.
 
   The `.nfr` wrapper is load-bearing, not decoration: `build-pages.mjs` mints
-  `requirements-nfr-N` from `.nonfunctional > ul > li` **or** `.nonfunctional > .nfr > h4`,
-  and it is the wrapper that keeps a section's own bullets — one level deeper — from being
-  read as legacy rows.
+  `requirements-nfr-N` from `.nonfunctional > ul > li`, `.nonfunctional > .nfr > h4` **or**
+  `.nonfunctional > .nfr > summary > h4` (the folded shape above), and it is the wrapper
+  that keeps a section's own bullets — one level deeper — from being read as legacy rows.
 
   **Legacy shape**, still valid and still what most of the corpus writes: a bold label with
   a nested sublist, `<li><strong>Scale</strong><ul>…</ul></li>`. `pattern.css` paints that
@@ -197,3 +270,6 @@ so a constraint missing its number leaves that block guessing.
    one that does the work.
 7. If the FR list is tiered, is each `<h4>` a short tier name with its gloss in a
    `<span class="subline">`, rather than one `Name — gloss` string?
+8. Is the mandatory tier still uncollapsed — a plain `<h4>`, plain `<li>` sentences, no
+   `details`, no `data-kb-level` — so a reader at the basic lens meets the whole promise
+   without opening anything?

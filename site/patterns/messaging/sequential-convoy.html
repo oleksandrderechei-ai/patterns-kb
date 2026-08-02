@@ -63,11 +63,6 @@
     {
       "@id": "../../designs/persona-identification.html#persona-identification",
       "name": "Persona Identification & Sanction Check",
-      "kb:note": "a KYC flow's results are delivered one lane per flow — a delivery_cursor row per flow keeps the queue parallel across flows while each flow is single-file"
-    },
-    {
-      "@id": "../../designs/persona-identification-v2.html#persona-identification-v2",
-      "name": "Persona Identification & Sanction Check (V2)",
       "kb:note": "a case study that prices the lane as well as praising it: ordering is bought with head-of-line blocking, bounded by the lane's own attempt budget"
     }
   ],
@@ -389,8 +384,7 @@ async function runOneGroup(broker: SessionBroker, handle: (m: Message) =&gt; Pro
             <div class="rel-group">
         <p class="rel-type">Demonstrated by</p>
         <div class="rel-list">
-          <div class="rel-item" data-kb-rel="demonstrated-by" data-kb-to="persona-identification"><a href="../../designs/persona-identification.html">Persona Identification &amp; Sanction Check</a><span class="rel-note">a KYC flow's results are delivered one lane per flow — a delivery_cursor row per flow keeps the queue parallel across flows while each flow is single-file</span></div>
-          <div class="rel-item" data-kb-rel="demonstrated-by" data-kb-to="persona-identification-v2"><a href="../../designs/persona-identification-v2.html">Persona Identification &amp; Sanction Check (V2)</a><span class="rel-note">a case study that prices the lane as well as praising it: ordering is bought with head-of-line blocking, bounded by the lane's own attempt budget</span></div>
+          <div class="rel-item" data-kb-rel="demonstrated-by" data-kb-to="persona-identification"><a href="../../designs/persona-identification.html">Persona Identification &amp; Sanction Check</a><span class="rel-note">a case study that prices the lane as well as praising it: ordering is bought with head-of-line blocking, bounded by the lane's own attempt budget</span></div>
         </div>
       </div>
 

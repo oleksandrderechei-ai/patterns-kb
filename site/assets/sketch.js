@@ -48,6 +48,25 @@
 
   /* ---- the floating Expand all / Collapse all ---- */
 
+  /* The control drives every FOLDABLE, not only every sketch. A design's entities and
+     interface blocks fold each group as a whole (details.entity-group,
+     details.endpoint-group) over the schemas and contracts inside it, so a control that
+     knew only about sketches would open eleven contracts inside five closed groups and look
+     broken. A large design's architecture block folds the same way one level deeper
+     (details.module-wrap over details.module-group), so the wrapper is listed too: expanding
+     the modules and leaving the wrapper shut opens seven panels nobody can see.
+     Highlighting above still keys on details.sketch alone — a group wrapper holds no code. */
+  var folds = document.querySelectorAll(
+    "details.sketch, details.entity-group, details.endpoint-group, details.module-wrap, details.module-group"
+  );
+  /* Name what is actually there: "code sketches" is precise where every fold is one, and a
+     lie on a design page whose folds include five endpoint groups. "Panels" rather than
+     "sections" or "blocks" — both of those already name something else here (a
+     .doc-section, a data-kb-block), and the control spans several of each. The word has to
+     read in BOTH directions, which is why it is not "collapsed panels": the label says
+     "Collapse all 33 …" exactly when nothing is collapsed. */
+  var noun = folds.length === sketches.length ? "code sketches" : "panels";
+
   /* ONE page-level control in the fixed cluster, on the LEFT edge — the same box as the
      theme, practiced and favourite toggles, mirrored across the page. It was a chip inside
      the block first, right-aligned under the heading, which put it directly beneath the
@@ -56,7 +75,7 @@
 
      Injected rather than authored, like every other floating control — the alternative is
      a markup sweep across every pattern and design page for pure presentation. */
-  if (sketches.length > 1) {
+  if (folds.length > 1) {
     var btn = document.createElement("button");
     btn.type = "button";
     btn.className = "sketch-toggle";
@@ -80,11 +99,11 @@
     /* Glyph and tooltip both name the ACTION, not the state: anything still closed means
        there is something left to expand. */
     var anyClosed = function () {
-      return Array.prototype.some.call(sketches, function (d) { return !d.open; });
+      return Array.prototype.some.call(folds, function (d) { return !d.open; });
     };
     var label = function () {
       var expand = anyClosed();
-      var what = (expand ? "Expand" : "Collapse") + " all " + sketches.length + " code sketches";
+      var what = (expand ? "Expand" : "Collapse") + " all " + folds.length + " " + noun;
       top.textContent = expand ? "▲" : "▼";
       bottom.textContent = expand ? "▼" : "▲";
       btn.title = what;
@@ -94,12 +113,12 @@
     };
     btn.addEventListener("click", function () {
       var open = anyClosed();
-      Array.prototype.forEach.call(sketches, function (d) { d.open = open; });
+      Array.prototype.forEach.call(folds, function (d) { d.open = open; });
       label();
     });
     /* A sketch opened on its own keeps the button honest. `toggle` fires asynchronously,
        so this cannot be folded into the click handler above. */
-    Array.prototype.forEach.call(sketches, function (d) { d.addEventListener("toggle", label); });
+    Array.prototype.forEach.call(folds, function (d) { d.addEventListener("toggle", label); });
     label();
     document.body.appendChild(btn);
   }
@@ -110,14 +129,14 @@
   var before = null;
   window.addEventListener("beforeprint", function () {
     before = [];
-    Array.prototype.forEach.call(sketches, function (d) {
+    Array.prototype.forEach.call(folds, function (d) {
       before.push(d.open);
       d.open = true;
     });
   });
   window.addEventListener("afterprint", function () {
     if (!before) return;
-    Array.prototype.forEach.call(sketches, function (d, i) { d.open = before[i]; });
+    Array.prototype.forEach.call(folds, function (d, i) { d.open = before[i]; });
     before = null;
   });
 })();

@@ -5,11 +5,11 @@
     "hazards": 36,
     "themes": 42,
     "principles": 27,
-    "designs": 41,
+    "designs": 40,
     "capabilities": 10,
     "comparisons": 10,
-    "relationships": 1299,
-    "renderedRelations": 2599
+    "relationships": 1265,
+    "renderedRelations": 2531
   },
   "relationTypes": {
     "combines-with": {
@@ -7176,11 +7176,11 @@
           "label": "Demonstrated by"
         },
         {
-          "to": "persona-identification-v2",
+          "to": "persona-identification",
           "type": "demonstrated-by",
           "note": "a case study where the pattern's payoff is a delivery guarantee: the record needs no companion queue because it already is one",
-          "name": "Persona Identification & Sanction Check (V2)",
-          "href": "designs/persona-identification-v2.html",
+          "name": "Persona Identification & Sanction Check",
+          "href": "designs/persona-identification.html",
           "label": "Demonstrated by"
         }
       ],
@@ -7403,17 +7403,9 @@
         {
           "to": "persona-identification",
           "type": "demonstrated-by",
-          "note": "one breaker per external vendor in a persona-verification saga, isolating a slow sanction-list check from a healthy ID-verification call",
+          "note": "a breaker whose state is shared on purpose, with the cold-start seeding rule that a per-process copy cannot express",
           "name": "Persona Identification & Sanction Check",
           "href": "designs/persona-identification.html",
-          "label": "Demonstrated by"
-        },
-        {
-          "to": "persona-identification-v2",
-          "type": "demonstrated-by",
-          "note": "a breaker whose state is shared on purpose, with the cold-start seeding rule that a per-process copy cannot express",
-          "name": "Persona Identification & Sanction Check (V2)",
-          "href": "designs/persona-identification-v2.html",
           "label": "Demonstrated by"
         }
       ],
@@ -7817,14 +7809,6 @@
           "label": "Demonstrated by"
         },
         {
-          "to": "persona-identification",
-          "type": "demonstrated-by",
-          "note": "backing off vendor calls and webhook delivery attempts in a persona-verification saga before giving up to a DLQ",
-          "name": "Persona Identification & Sanction Check",
-          "href": "designs/persona-identification.html",
-          "label": "Demonstrated by"
-        },
-        {
           "to": "gopuff",
           "type": "demonstrated-by",
           "note": "bounding the replay is what stops contention on a promoted item becoming a retry storm",
@@ -7833,11 +7817,11 @@
           "label": "Demonstrated by"
         },
         {
-          "to": "persona-identification-v2",
+          "to": "persona-identification",
           "type": "demonstrated-by",
           "note": "backoff with jitter argued from the recovery it belongs to, where the alternative is a synchronised stampede at the end of a six-hour outage",
-          "name": "Persona Identification & Sanction Check (V2)",
-          "href": "designs/persona-identification-v2.html",
+          "name": "Persona Identification & Sanction Check",
+          "href": "designs/persona-identification.html",
           "label": "Demonstrated by"
         }
       ],
@@ -8264,17 +8248,9 @@
         {
           "to": "persona-identification",
           "type": "demonstrated-by",
-          "note": "isolating each external vendor's queue, concurrency, and failure handling in a persona-verification saga so no vendor can starve another",
+          "note": "the isolation applied twice — per dependency and per workload — with the vendor quota split the same way, because two pools on one ceiling are not two pools",
           "name": "Persona Identification & Sanction Check",
           "href": "designs/persona-identification.html",
-          "label": "Demonstrated by"
-        },
-        {
-          "to": "persona-identification-v2",
-          "type": "demonstrated-by",
-          "note": "the isolation applied twice — per dependency and per workload — with the vendor quota split the same way, because two pools on one ceiling are not two pools",
-          "name": "Persona Identification & Sanction Check (V2)",
-          "href": "designs/persona-identification-v2.html",
           "label": "Demonstrated by"
         }
       ],
@@ -8679,11 +8655,11 @@
           "label": "Enables"
         },
         {
-          "to": "persona-identification-v2",
+          "to": "persona-identification",
           "type": "demonstrated-by",
           "note": "readiness as an input to a scaler that moves on queue age rather than load",
-          "name": "Persona Identification & Sanction Check (V2)",
-          "href": "designs/persona-identification-v2.html",
+          "name": "Persona Identification & Sanction Check",
+          "href": "designs/persona-identification.html",
           "label": "Demonstrated by"
         }
       ],
@@ -9475,14 +9451,6 @@
           "label": "Demonstrated by"
         },
         {
-          "to": "persona-identification",
-          "type": "demonstrated-by",
-          "note": "queueing persona-check requests ahead of two vendors whose rate limits, not this system's own capacity, set the throughput ceiling",
-          "name": "Persona Identification & Sanction Check",
-          "href": "designs/persona-identification.html",
-          "label": "Demonstrated by"
-        },
-        {
           "to": "youtube",
           "type": "demonstrated-by",
           "note": "A transcode fleet sized to the mean is what the levelling queue buys",
@@ -9491,11 +9459,11 @@
           "label": "Demonstrated by"
         },
         {
-          "to": "persona-identification-v2",
+          "to": "persona-identification",
           "type": "demonstrated-by",
           "note": "a queue that absorbs bursts, drawn together with the admission control that handles the overload it cannot",
-          "name": "Persona Identification & Sanction Check (V2)",
-          "href": "designs/persona-identification-v2.html",
+          "name": "Persona Identification & Sanction Check",
+          "href": "designs/persona-identification.html",
           "label": "Demonstrated by"
         },
         {
@@ -9934,14 +9902,6 @@
           "label": "Demonstrated by"
         },
         {
-          "to": "persona-identification",
-          "type": "demonstrated-by",
-          "note": "capping a client's request rate on a persona-verification API so one client cannot exhaust a shared vendor quota",
-          "name": "Persona Identification & Sanction Check",
-          "href": "designs/persona-identification.html",
-          "label": "Demonstrated by"
-        },
-        {
           "to": "bitly",
           "type": "demonstrated-by",
           "note": "A URL shortener limits on the miss path, because a scan of the code space looks exactly like a flood of misses",
@@ -9958,11 +9918,11 @@
           "label": "Demonstrated by"
         },
         {
-          "to": "persona-identification-v2",
+          "to": "persona-identification",
           "type": "demonstrated-by",
           "note": "a limiter that stops calls which would succeed, drawn beside the breaker that stops calls which would fail",
-          "name": "Persona Identification & Sanction Check (V2)",
-          "href": "designs/persona-identification-v2.html",
+          "name": "Persona Identification & Sanction Check",
+          "href": "designs/persona-identification.html",
           "label": "Demonstrated by"
         },
         {
@@ -10214,14 +10174,6 @@
           "label": "Demonstrated by"
         },
         {
-          "to": "persona-identification",
-          "type": "demonstrated-by",
-          "note": "bounding an ID-verification and a sanction-check call that publish no latency guarantee of their own",
-          "name": "Persona Identification & Sanction Check",
-          "href": "designs/persona-identification.html",
-          "label": "Demonstrated by"
-        },
-        {
           "to": "leetcode",
           "type": "demonstrated-by",
           "note": "a bounded deadline caps work that could otherwise run forever and pin a core",
@@ -10230,11 +10182,11 @@
           "label": "Demonstrated by"
         },
         {
-          "to": "persona-identification-v2",
+          "to": "persona-identification",
           "type": "demonstrated-by",
           "note": "deadlines as columns rather than call settings, which is what turns a silent third party into a breach somebody is paged for",
-          "name": "Persona Identification & Sanction Check (V2)",
-          "href": "designs/persona-identification-v2.html",
+          "name": "Persona Identification & Sanction Check",
+          "href": "designs/persona-identification.html",
           "label": "Demonstrated by"
         }
       ],
@@ -10669,7 +10621,6 @@
         "fb-post-search",
         "tinder",
         "google-docs",
-        "persona-identification",
         "design-rate-limiter"
       ]
     },
@@ -12084,11 +12035,11 @@
           "label": "Prevents"
         },
         {
-          "to": "persona-identification-v2",
+          "to": "persona-identification",
           "type": "demonstrated-by",
           "note": "a single edge that owns three different refusals — unauthenticated, over the limit, and behind on the drain",
-          "name": "Persona Identification & Sanction Check (V2)",
-          "href": "designs/persona-identification-v2.html",
+          "name": "Persona Identification & Sanction Check",
+          "href": "designs/persona-identification.html",
           "label": "Demonstrated by"
         }
       ],
@@ -12255,17 +12206,9 @@
         {
           "to": "persona-identification",
           "type": "demonstrated-by",
-          "note": "a KYC flow hands the onboardee a presigned upload URL for their ID photo — one object, one action, a fifteen-minute window, and the issuing service never touches the bytes",
+          "note": "a valet key whose re-issue is bounded by a counter, so the endpoint cannot become a signing oracle",
           "name": "Persona Identification & Sanction Check",
           "href": "designs/persona-identification.html",
-          "label": "Demonstrated by"
-        },
-        {
-          "to": "persona-identification-v2",
-          "type": "demonstrated-by",
-          "note": "a valet key whose re-issue is bounded by a counter, so the endpoint cannot become a signing oracle",
-          "name": "Persona Identification & Sanction Check (V2)",
-          "href": "designs/persona-identification-v2.html",
           "label": "Demonstrated by"
         },
         {
@@ -12760,17 +12703,9 @@
         {
           "to": "persona-identification",
           "type": "demonstrated-by",
-          "note": "a queue-driven fleet whose work is remote calls: the scaling signal is queue age, and scale-in is safe because an abandoned claim is the expired-lock case the sweeper already handles",
+          "note": "scaling on queue age, with scale-in safe because an abandoned claim is the expired-lease case the failure path already rehearses",
           "name": "Persona Identification & Sanction Check",
           "href": "designs/persona-identification.html",
-          "label": "Demonstrated by"
-        },
-        {
-          "to": "persona-identification-v2",
-          "type": "demonstrated-by",
-          "note": "scaling on queue age, with scale-in safe because an abandoned claim is the expired-lease case the failure path already rehearses",
-          "name": "Persona Identification & Sanction Check (V2)",
-          "href": "designs/persona-identification-v2.html",
           "label": "Demonstrated by"
         },
         {
@@ -13047,17 +12982,9 @@
         {
           "to": "persona-identification",
           "type": "demonstrated-by",
-          "note": "sequencing a persona's identity check and sanction screening as local transactions with explicit failure terminals, no transaction manager spanning the vendors",
+          "note": "a long-running flow whose compensation is a recorded terminal rather than a rollback across third parties",
           "name": "Persona Identification & Sanction Check",
           "href": "designs/persona-identification.html",
-          "label": "Demonstrated by"
-        },
-        {
-          "to": "persona-identification-v2",
-          "type": "demonstrated-by",
-          "note": "a long-running flow whose compensation is a recorded terminal rather than a rollback across third parties",
-          "name": "Persona Identification & Sanction Check (V2)",
-          "href": "designs/persona-identification-v2.html",
           "label": "Demonstrated by"
         },
         {
@@ -13324,17 +13251,9 @@
         {
           "to": "persona-identification",
           "type": "demonstrated-by",
-          "note": "storing a submitted ID photo as an encrypted blob reached by presigned upload, referenced by key from a metadata row written before the upload",
+          "note": "a store whose lifecycle rule is deliberately demoted to a backstop, because the retention clock starts at relationship close rather than at object age",
           "name": "Persona Identification & Sanction Check",
           "href": "designs/persona-identification.html",
-          "label": "Demonstrated by"
-        },
-        {
-          "to": "persona-identification-v2",
-          "type": "demonstrated-by",
-          "note": "a store whose lifecycle rule is deliberately demoted to a backstop, because the retention clock starts at relationship close rather than at object age",
-          "name": "Persona Identification & Sanction Check (V2)",
-          "href": "designs/persona-identification-v2.html",
           "label": "Demonstrated by"
         },
         {
@@ -13881,17 +13800,9 @@
         {
           "to": "persona-identification",
           "type": "demonstrated-by",
-          "note": "committing a KYC flow's state transition and its client webhook event in one transaction, so a crash can never separate what happened from what the client is told",
+          "note": "a case study where the pattern's guarantee is kept without its table — an append-only record with a client-visible flag and a per-flow cursor is the relay's whole queue",
           "name": "Persona Identification & Sanction Check",
           "href": "designs/persona-identification.html",
-          "label": "Demonstrated by"
-        },
-        {
-          "to": "persona-identification-v2",
-          "type": "demonstrated-by",
-          "note": "a case study where the pattern's guarantee is kept without its table — an append-only record with a client-visible flag and a per-flow cursor is the relay's whole queue",
-          "name": "Persona Identification & Sanction Check (V2)",
-          "href": "designs/persona-identification-v2.html",
           "label": "Demonstrated by"
         }
       ],
@@ -14073,17 +13984,9 @@
         {
           "to": "persona-identification",
           "type": "demonstrated-by",
-          "note": "a KYC flow deduping vendor callbacks on the sender's request id in the same transaction as the effect, closing the duplicate-that-arrives-first window",
+          "note": "the receive-side guard generalised past callbacks: one row per batch member, so a redelivered batch applies only what it still owes",
           "name": "Persona Identification & Sanction Check",
           "href": "designs/persona-identification.html",
-          "label": "Demonstrated by"
-        },
-        {
-          "to": "persona-identification-v2",
-          "type": "demonstrated-by",
-          "note": "the receive-side guard generalised past callbacks: one row per batch member, so a redelivered batch applies only what it still owes",
-          "name": "Persona Identification & Sanction Check (V2)",
-          "href": "designs/persona-identification-v2.html",
           "label": "Demonstrated by"
         }
       ],
@@ -14394,11 +14297,11 @@
           "label": "Demonstrated by"
         },
         {
-          "to": "persona-identification-v2",
+          "to": "persona-identification",
           "type": "demonstrated-by",
           "note": "a projection that commits with its source, rebuilt rather than migrated when the read model changes",
-          "name": "Persona Identification & Sanction Check (V2)",
-          "href": "designs/persona-identification-v2.html",
+          "name": "Persona Identification & Sanction Check",
+          "href": "designs/persona-identification.html",
           "label": "Demonstrated by"
         },
         {
@@ -14502,7 +14405,6 @@
         "busy-database",
         "gopuff",
         "camelcamelcamel",
-        "persona-identification",
         "data-analytics"
       ]
     },
@@ -14719,17 +14621,9 @@
         {
           "to": "persona-identification",
           "type": "demonstrated-by",
-          "note": "the singleton schedulers of a KYC pipeline take a lease rather than relying on being deployed once — takeover on expiry turns a crashed scheduler into a lease interval of delay",
+          "note": "leases applied to the recovery machinery itself, so the failover story for the failover mechanism is the same mechanism",
           "name": "Persona Identification & Sanction Check",
           "href": "designs/persona-identification.html",
-          "label": "Demonstrated by"
-        },
-        {
-          "to": "persona-identification-v2",
-          "type": "demonstrated-by",
-          "note": "leases applied to the recovery machinery itself, so the failover story for the failover mechanism is the same mechanism",
-          "name": "Persona Identification & Sanction Check (V2)",
-          "href": "designs/persona-identification-v2.html",
           "label": "Demonstrated by"
         },
         {
@@ -15914,17 +15808,9 @@
         {
           "to": "persona-identification",
           "type": "demonstrated-by",
-          "note": "The persona flow's single-writer Postgres fails over to a synchronous standby, so promotion loses no acknowledged fact",
+          "note": "synchronous chosen over asynchronous because the fact an async replica could drop is the append already promised to a client",
           "name": "Persona Identification & Sanction Check",
           "href": "designs/persona-identification.html",
-          "label": "Demonstrated by"
-        },
-        {
-          "to": "persona-identification-v2",
-          "type": "demonstrated-by",
-          "note": "synchronous chosen over asynchronous because the fact an async replica could drop is the append already promised to a client",
-          "name": "Persona Identification & Sanction Check (V2)",
-          "href": "designs/persona-identification-v2.html",
           "label": "Demonstrated by"
         },
         {
@@ -16197,8 +16083,7 @@
         "unbounded-queue",
         "noisy-neighbour",
         "starvation",
-        "chatgpt",
-        "persona-identification"
+        "chatgpt"
       ]
     },
     "conditional-write": {
@@ -16312,11 +16197,11 @@
           "label": "Demonstrated by"
         },
         {
-          "to": "persona-identification-v2",
+          "to": "persona-identification",
           "type": "demonstrated-by",
           "note": "a redemption whose rowcount distinguishes expired from forged from already-spent, which a read-then-write cannot",
-          "name": "Persona Identification & Sanction Check (V2)",
-          "href": "designs/persona-identification-v2.html",
+          "name": "Persona Identification & Sanction Check",
+          "href": "designs/persona-identification.html",
           "label": "Demonstrated by"
         }
       ],
@@ -16663,17 +16548,9 @@
         {
           "to": "persona-identification",
           "type": "demonstrated-by",
-          "note": "a long KYC flow guards each state change with a version check, so the loser of a race writes nothing and needs no rollback",
+          "note": "the guard doubles as the ordering key, so a lost update and a stale delivery are stopped by one constraint",
           "name": "Persona Identification & Sanction Check",
           "href": "designs/persona-identification.html",
-          "label": "Demonstrated by"
-        },
-        {
-          "to": "persona-identification-v2",
-          "type": "demonstrated-by",
-          "note": "the guard doubles as the ordering key, so a lost update and a stale delivery are stopped by one constraint",
-          "name": "Persona Identification & Sanction Check (V2)",
-          "href": "designs/persona-identification-v2.html",
           "label": "Demonstrated by"
         }
       ],
@@ -16976,11 +16853,11 @@
           "label": "Demonstrated by"
         },
         {
-          "to": "persona-identification-v2",
+          "to": "persona-identification",
           "type": "demonstrated-by",
           "note": "a claim where contention is expected, contrasted on the same page with the optimistic guard used where it is rare",
-          "name": "Persona Identification & Sanction Check (V2)",
-          "href": "designs/persona-identification-v2.html",
+          "name": "Persona Identification & Sanction Check",
+          "href": "designs/persona-identification.html",
           "label": "Demonstrated by"
         }
       ],
@@ -18155,17 +18032,9 @@
         {
           "to": "persona-identification",
           "type": "demonstrated-by",
-          "note": "the accept path is coupled to the drain rate: refusing a KYC flow costs the client a retry they can see, accepting it costs them a flow invisible for hours",
+          "note": "refusal published as a contract term, on the argument that an accepted flow buried in a backlog is a worse failure than a rejected one",
           "name": "Persona Identification & Sanction Check",
           "href": "designs/persona-identification.html",
-          "label": "Demonstrated by"
-        },
-        {
-          "to": "persona-identification-v2",
-          "type": "demonstrated-by",
-          "note": "refusal published as a contract term, on the argument that an accepted flow buried in a backlog is a worse failure than a rejected one",
-          "name": "Persona Identification & Sanction Check (V2)",
-          "href": "designs/persona-identification-v2.html",
           "label": "Demonstrated by"
         }
       ],
@@ -18353,17 +18222,9 @@
         {
           "to": "persona-identification",
           "type": "demonstrated-by",
-          "note": "a KYC flow whose steps run minutes to hours, orchestrated as a persisted state machine plus task queue — the hand-rolled end of the same pattern a workflow engine packages",
+          "note": "durable orchestration built from two tables, with the engine named as a deferred exit priced against handing over the history",
           "name": "Persona Identification & Sanction Check",
           "href": "designs/persona-identification.html",
-          "label": "Demonstrated by"
-        },
-        {
-          "to": "persona-identification-v2",
-          "type": "demonstrated-by",
-          "note": "durable orchestration built from two tables, with the engine named as a deferred exit priced against handing over the history",
-          "name": "Persona Identification & Sanction Check (V2)",
-          "href": "designs/persona-identification-v2.html",
           "label": "Demonstrated by"
         },
         {
@@ -18721,14 +18582,6 @@
           "label": "Alternative to"
         },
         {
-          "to": "persona-identification",
-          "type": "demonstrated-by",
-          "note": "a long-running KYC flow where every failure is silence — a dead worker, an onboardee who never uploaded, a vendor that never called back",
-          "name": "Persona Identification & Sanction Check",
-          "href": "designs/persona-identification.html",
-          "label": "Demonstrated by"
-        },
-        {
           "to": "bookmyshow",
           "type": "demonstrated-by",
           "note": "seat holds expire on a clock: the sweep is what makes an abandoned checkout release inventory instead of stranding it",
@@ -18769,11 +18622,11 @@
           "label": "Demonstrated by"
         },
         {
-          "to": "persona-identification-v2",
+          "to": "persona-identification",
           "type": "demonstrated-by",
           "note": "the component that makes silence actionable: it turns a passed deadline into a terminal, an escalation or a caveat rather than a wait",
-          "name": "Persona Identification & Sanction Check (V2)",
-          "href": "designs/persona-identification-v2.html",
+          "name": "Persona Identification & Sanction Check",
+          "href": "designs/persona-identification.html",
           "label": "Demonstrated by"
         }
       ],
@@ -19922,17 +19775,9 @@
         {
           "to": "persona-identification",
           "type": "demonstrated-by",
-          "note": "live flows and the recurring recheck batch share one task table, so recheck tasks claim from a separately sized pool — reserved capacity per class, because the batch's jurisdiction cadence is a deadline too",
+          "note": "the case for reserved capacity over strict preemption, argued from the low-priority class having a deadline of its own",
           "name": "Persona Identification & Sanction Check",
           "href": "designs/persona-identification.html",
-          "label": "Demonstrated by"
-        },
-        {
-          "to": "persona-identification-v2",
-          "type": "demonstrated-by",
-          "note": "the case for reserved capacity over strict preemption, argued from the low-priority class having a deadline of its own",
-          "name": "Persona Identification & Sanction Check (V2)",
-          "href": "designs/persona-identification-v2.html",
           "label": "Demonstrated by"
         }
       ],
@@ -20404,17 +20249,9 @@
         {
           "to": "persona-identification",
           "type": "demonstrated-by",
-          "note": "the list roster, each list's criticality, the recheck cadences, vendor quotas and fallback weights move without a deploy — and a worker that cannot reach the store boots from its last cached version rather than from defaults",
+          "note": "configuration that decides what an unreachable check costs, which is why compiled-in defaults would screen the wrong lists and look successful doing it",
           "name": "Persona Identification & Sanction Check",
           "href": "designs/persona-identification.html",
-          "label": "Demonstrated by"
-        },
-        {
-          "to": "persona-identification-v2",
-          "type": "demonstrated-by",
-          "note": "configuration that decides what an unreachable check costs, which is why compiled-in defaults would screen the wrong lists and look successful doing it",
-          "name": "Persona Identification & Sanction Check (V2)",
-          "href": "designs/persona-identification-v2.html",
           "label": "Demonstrated by"
         }
       ],
@@ -21299,14 +21136,6 @@
           "label": "Demonstrated by"
         },
         {
-          "to": "persona-identification",
-          "type": "demonstrated-by",
-          "note": "KYC worker pools claiming tasks from a Postgres queue with SKIP LOCKED instead of a broker",
-          "name": "Persona Identification & Sanction Check",
-          "href": "designs/persona-identification.html",
-          "label": "Demonstrated by"
-        },
-        {
           "to": "instagram",
           "type": "demonstrated-by",
           "note": "fan-out on write is drained by a worker fleet off one queue, so a millions-of-followers post spreads across machines instead of one",
@@ -21315,11 +21144,11 @@
           "label": "Demonstrated by"
         },
         {
-          "to": "persona-identification-v2",
+          "to": "persona-identification",
           "type": "demonstrated-by",
           "note": "a claim whose lease turns a crashed consumer into the same case as an exhausted retry",
-          "name": "Persona Identification & Sanction Check (V2)",
-          "href": "designs/persona-identification-v2.html",
+          "name": "Persona Identification & Sanction Check",
+          "href": "designs/persona-identification.html",
           "label": "Demonstrated by"
         },
         {
@@ -21504,17 +21333,9 @@
         {
           "to": "persona-identification",
           "type": "demonstrated-by",
-          "note": "a KYC flow's results are delivered one lane per flow — a delivery_cursor row per flow keeps the queue parallel across flows while each flow is single-file",
+          "note": "a case study that prices the lane as well as praising it: ordering is bought with head-of-line blocking, bounded by the lane's own attempt budget",
           "name": "Persona Identification & Sanction Check",
           "href": "designs/persona-identification.html",
-          "label": "Demonstrated by"
-        },
-        {
-          "to": "persona-identification-v2",
-          "type": "demonstrated-by",
-          "note": "a case study that prices the lane as well as praising it: ordering is bought with head-of-line blocking, bounded by the lane's own attempt budget",
-          "name": "Persona Identification & Sanction Check (V2)",
-          "href": "designs/persona-identification-v2.html",
           "label": "Demonstrated by"
         },
         {
@@ -21824,7 +21645,6 @@
         "in-process-cache",
         "streaming",
         "online-chess",
-        "persona-identification",
         "logging-service"
       ]
     },
@@ -21955,14 +21775,6 @@
           "label": "Demonstrated by"
         },
         {
-          "to": "persona-identification",
-          "type": "demonstrated-by",
-          "note": "isolating exhausted vendor calls and failed webhook deliveries per branch in a persona-verification saga",
-          "name": "Persona Identification & Sanction Check",
-          "href": "designs/persona-identification.html",
-          "label": "Demonstrated by"
-        },
-        {
           "to": "youtube",
           "type": "demonstrated-by",
           "note": "The poison transcode job is the classic dead-letter case",
@@ -21971,11 +21783,11 @@
           "label": "Demonstrated by"
         },
         {
-          "to": "persona-identification-v2",
+          "to": "persona-identification",
           "type": "demonstrated-by",
           "note": "dead-lettering applied at three scales — a task, a single batch member, and a whole delivery lane",
-          "name": "Persona Identification & Sanction Check (V2)",
-          "href": "designs/persona-identification-v2.html",
+          "name": "Persona Identification & Sanction Check",
+          "href": "designs/persona-identification.html",
           "label": "Demonstrated by"
         },
         {
@@ -22180,17 +21992,9 @@
         {
           "to": "persona-identification",
           "type": "demonstrated-by",
-          "note": "one flowId threading a persona-verification saga's vendor calls, logs, and webhook payload end to end",
+          "note": "one id instead of distributed tracing, with the honest note that this stops being true when work leaves the transaction",
           "name": "Persona Identification & Sanction Check",
           "href": "designs/persona-identification.html",
-          "label": "Demonstrated by"
-        },
-        {
-          "to": "persona-identification-v2",
-          "type": "demonstrated-by",
-          "note": "one id instead of distributed tracing, with the honest note that this stops being true when work leaves the transaction",
-          "name": "Persona Identification & Sanction Check (V2)",
-          "href": "designs/persona-identification-v2.html",
           "label": "Demonstrated by"
         }
       ],
@@ -22373,17 +22177,9 @@
         {
           "to": "persona-identification",
           "type": "demonstrated-by",
-          "note": "a sanctions screening fanned across several lists, with one collector deciding Clear or Sanctioned only when all legs are in",
+          "note": "a fan-in whose tally is round-scoped, and whose legs carry a third outcome so an unreachable participant still terminates",
           "name": "Persona Identification & Sanction Check",
           "href": "designs/persona-identification.html",
-          "label": "Demonstrated by"
-        },
-        {
-          "to": "persona-identification-v2",
-          "type": "demonstrated-by",
-          "note": "a fan-in whose tally is round-scoped, and whose legs carry a third outcome so an unreachable participant still terminates",
-          "name": "Persona Identification & Sanction Check (V2)",
-          "href": "designs/persona-identification-v2.html",
           "label": "Demonstrated by"
         }
       ],
@@ -22991,7 +22787,7 @@
       },
       "hasExplain": true,
       "mentionedBy": [
-        "persona-identification-v2"
+        "persona-identification"
       ]
     },
     "read-through": {
@@ -23290,17 +23086,9 @@
         {
           "to": "persona-identification",
           "type": "demonstrated-by",
-          "note": "a compliance re-screen batches to fit a contracted vendor rate, and keeps the batch a transport optimisation rather than a unit of failure by committing each member separately",
+          "note": "batching priced exactly: it buys rate and not invoice, and its partial-failure cost is paid one member at a time",
           "name": "Persona Identification & Sanction Check",
           "href": "designs/persona-identification.html",
-          "label": "Demonstrated by"
-        },
-        {
-          "to": "persona-identification-v2",
-          "type": "demonstrated-by",
-          "note": "batching priced exactly: it buys rate and not invoice, and its partial-failure cost is paid one member at a time",
-          "name": "Persona Identification & Sanction Check (V2)",
-          "href": "designs/persona-identification-v2.html",
           "label": "Demonstrated by"
         },
         {
@@ -23499,14 +23287,6 @@
           "label": "Demonstrated by"
         },
         {
-          "to": "persona-identification",
-          "type": "demonstrated-by",
-          "note": "passing a storage key for a submitted ID photo between flow steps instead of the image bytes themselves",
-          "name": "Persona Identification & Sanction Check",
-          "href": "designs/persona-identification.html",
-          "label": "Demonstrated by"
-        },
-        {
           "to": "youtube",
           "type": "demonstrated-by",
           "note": "A transcode queue is the canonical claim check: the payload stays in the store",
@@ -23515,11 +23295,11 @@
           "label": "Demonstrated by"
         },
         {
-          "to": "persona-identification-v2",
+          "to": "persona-identification",
           "type": "demonstrated-by",
           "note": "the key travels through the queue and the log; the payload never does",
-          "name": "Persona Identification & Sanction Check (V2)",
-          "href": "designs/persona-identification-v2.html",
+          "name": "Persona Identification & Sanction Check",
+          "href": "designs/persona-identification.html",
           "label": "Demonstrated by"
         }
       ],
@@ -24115,14 +23895,6 @@
           "label": "Demonstrated by"
         },
         {
-          "to": "persona-identification",
-          "type": "demonstrated-by",
-          "note": "deduping vendor callbacks and webhook retries in a persona-verification saga so a redelivered message never double-applies a result",
-          "name": "Persona Identification & Sanction Check",
-          "href": "designs/persona-identification.html",
-          "label": "Demonstrated by"
-        },
-        {
           "to": "gopuff",
           "type": "demonstrated-by",
           "note": "a rapid-delivery checkout replays its whole serializable transaction on abort, and the key is what makes the replay safe",
@@ -24147,11 +23919,11 @@
           "label": "Demonstrated by"
         },
         {
-          "to": "persona-identification-v2",
+          "to": "persona-identification",
           "type": "demonstrated-by",
           "note": "a case study that prices the pattern's limit: at-least-once transport plus an idempotent effect is exactly-once in effect only where both ends are yours",
-          "name": "Persona Identification & Sanction Check (V2)",
-          "href": "designs/persona-identification-v2.html",
+          "name": "Persona Identification & Sanction Check",
+          "href": "designs/persona-identification.html",
           "label": "Demonstrated by"
         }
       ],
@@ -25275,8 +25047,7 @@
         "noisy-neighbour",
         "scaling-reads",
         "fb-post-search",
-        "gopuff",
-        "persona-identification"
+        "gopuff"
       ]
     },
     "entity": {
@@ -26511,17 +26282,9 @@
         {
           "to": "persona-identification",
           "type": "demonstrated-by",
-          "note": "each vendor gets a translator that parses its payload and maps it onto our own three-valued outcome — and stamps provider and policy version onto the transition, so the history can answer how a person was verified",
+          "note": "a translator that runs ahead of BEGIN on purpose, because a parse failure inside the transaction rolls back the record that the callback was ever seen",
           "name": "Persona Identification & Sanction Check",
           "href": "designs/persona-identification.html",
-          "label": "Demonstrated by"
-        },
-        {
-          "to": "persona-identification-v2",
-          "type": "demonstrated-by",
-          "note": "a translator that runs ahead of BEGIN on purpose, because a parse failure inside the transaction rolls back the record that the callback was ever seen",
-          "name": "Persona Identification & Sanction Check (V2)",
-          "href": "designs/persona-identification-v2.html",
           "label": "Demonstrated by"
         }
       ],
@@ -28666,17 +28429,9 @@
         {
           "to": "persona-identification",
           "type": "demonstrated-by",
-          "note": "a KYC flow builds a session for a principal with no account — an opaque single-use link whose state is a stored hash, which is what lets it be expired and revoked; a self-validating token could be neither",
+          "note": "a session designed around a person who will never register, and revoked by a resend rather than by a logout",
           "name": "Persona Identification & Sanction Check",
           "href": "designs/persona-identification.html",
-          "label": "Demonstrated by"
-        },
-        {
-          "to": "persona-identification-v2",
-          "type": "demonstrated-by",
-          "note": "a session designed around a person who will never register, and revoked by a resend rather than by a logout",
-          "name": "Persona Identification & Sanction Check (V2)",
-          "href": "designs/persona-identification-v2.html",
           "label": "Demonstrated by"
         }
       ],
@@ -28969,17 +28724,9 @@
         {
           "to": "persona-identification",
           "type": "demonstrated-by",
-          "note": "redacting raw PII from every log line in a persona-verification saga, emitting flowId/personaId references instead",
+          "note": "the same reasoning that rejects a wire tap here: a monitoring surface is where access controls are weakest",
           "name": "Persona Identification & Sanction Check",
           "href": "designs/persona-identification.html",
-          "label": "Demonstrated by"
-        },
-        {
-          "to": "persona-identification-v2",
-          "type": "demonstrated-by",
-          "note": "the same reasoning that rejects a wire tap here: a monitoring surface is where access controls are weakest",
-          "name": "Persona Identification & Sanction Check (V2)",
-          "href": "designs/persona-identification-v2.html",
           "label": "Demonstrated by"
         },
         {
@@ -29730,7 +29477,7 @@
       "mentionedBy": [
         "api-design",
         "chatgpt",
-        "persona-identification-v2"
+        "persona-identification"
       ]
     },
     "api-routing": {
@@ -30415,11 +30162,11 @@
           "label": "Prevents"
         },
         {
-          "to": "persona-identification-v2",
+          "to": "persona-identification",
           "type": "demonstrated-by",
           "note": "shedding published as a contract term rather than applied as an incident measure, with the drain-rate signal that decides when it fires",
-          "name": "Persona Identification & Sanction Check (V2)",
-          "href": "designs/persona-identification-v2.html",
+          "name": "Persona Identification & Sanction Check",
+          "href": "designs/persona-identification.html",
           "label": "Demonstrated by"
         }
       ],
@@ -30993,11 +30740,11 @@
           "label": "Demonstrated by"
         },
         {
-          "to": "persona-identification-v2",
+          "to": "persona-identification",
           "type": "demonstrated-by",
           "note": "statelessness as the reason a crash needs no special case, in a system whose whole argument is recovery",
-          "name": "Persona Identification & Sanction Check (V2)",
-          "href": "designs/persona-identification-v2.html",
+          "name": "Persona Identification & Sanction Check",
+          "href": "designs/persona-identification.html",
           "label": "Demonstrated by"
         }
       ],
@@ -31323,17 +31070,9 @@
         {
           "to": "persona-identification",
           "type": "demonstrated-by",
-          "note": "residency is one full stack per region — gateway, API, workers, Postgres and standby, vault, object store — stamped from the same infrastructure-as-code so only jurisdiction config varies",
+          "note": "isolation made checkable: a query cannot cross a boundary with no connection across it, at the stated cost of N copies of everything",
           "name": "Persona Identification & Sanction Check",
           "href": "designs/persona-identification.html",
-          "label": "Demonstrated by"
-        },
-        {
-          "to": "persona-identification-v2",
-          "type": "demonstrated-by",
-          "note": "isolation made checkable: a query cannot cross a boundary with no connection across it, at the stated cost of N copies of everything",
-          "name": "Persona Identification & Sanction Check (V2)",
-          "href": "designs/persona-identification-v2.html",
           "label": "Demonstrated by"
         },
         {
@@ -32286,7 +32025,7 @@
       "hasExplain": true,
       "mentionedBy": [
         "distributed-monolith",
-        "persona-identification-v2"
+        "persona-identification"
       ]
     },
     "feature-flag": {
@@ -35412,7 +35151,6 @@
       "mentionedBy": [
         "consistency-and-replication",
         "redundancy",
-        "persona-identification",
         "regions"
       ]
     },
@@ -35608,8 +35346,7 @@
       "mentionedBy": [
         "monolithic-persistence",
         "microservices-design",
-        "gopuff",
-        "persona-identification"
+        "gopuff"
       ]
     },
     "resource-leak": {
@@ -36358,8 +36095,7 @@
       ],
       "mentionedBy": [
         "compute-resource-consolidation",
-        "monolithic-persistence",
-        "persona-identification"
+        "monolithic-persistence"
       ]
     },
     "chatty-io": {
@@ -37293,7 +37029,7 @@
         "semaphore"
       ],
       "mentionedBy": [
-        "persona-identification-v2"
+        "persona-identification"
       ]
     },
     "cap-theorem": {
@@ -37376,7 +37112,7 @@
         "outbox"
       ],
       "mentionedBy": [
-        "persona-identification-v2"
+        "persona-identification"
       ]
     },
     "system-design-interview": {
@@ -41177,17 +40913,9 @@
         {
           "to": "persona-identification",
           "type": "demonstrated-by",
-          "note": "a KYC design that holds exactly-once effects and tenant isolation on one database, refusing every component its confirmed volume cannot justify",
+          "note": "guarantees kept with fewer moving parts than a bigger design would reach for, each rejection recorded with the number that justifies it",
           "name": "Persona Identification & Sanction Check",
           "href": "designs/persona-identification.html",
-          "label": "Demonstrated by"
-        },
-        {
-          "to": "persona-identification-v2",
-          "type": "demonstrated-by",
-          "note": "guarantees kept with fewer moving parts than a bigger design would reach for, each rejection recorded with the number that justifies it",
-          "name": "Persona Identification & Sanction Check (V2)",
-          "href": "designs/persona-identification-v2.html",
           "label": "Demonstrated by"
         }
       ],
@@ -48299,7 +48027,7 @@
       "kind": "design",
       "band": "design",
       "group": "design",
-      "essence": "A long-running identity-and-sanctions flow that waits on people and vendors for days, yet never tells the client a wrong or half-finished verdict",
+      "essence": "A long-running identity-and-sanctions flow argued from its delivery contract: exactly-once in effect, and a clock on everything that can stall",
       "favourite": false,
       "aliases": [
         "KYC flow",
@@ -48308,527 +48036,6 @@
         "person identification flow",
         "magic-link onboarding"
       ],
-      "tags": [
-        "event-driven",
-        "consistency",
-        "resilience",
-        "security"
-      ],
-      "solves": [
-        "my flow status enum is tangled up with retry counts and worker bookkeeping",
-        "we write the new state then crash before publishing the event and the client never hears",
-        "a vendor callback arrives twice and the duplicate lands before we have written our own event",
-        "two workers picked up the same task and both called the paid vendor API",
-        "one forgotten client-id filter in a query could leak another tenant's data"
-      ],
-      "docClass": "design",
-      "dir": "designs",
-      "path": "designs/persona-identification.html",
-      "relations": [
-        {
-          "to": "saga",
-          "type": "demonstrates",
-          "note": "verify, screen and notify are local transactions sequenced by the state machine, with explicit failure terminals instead of a transaction manager spanning the vendors",
-          "name": "Saga",
-          "href": "patterns/distributed/coordination/saga.html",
-          "label": "Demonstrates"
-        },
-        {
-          "to": "workflow-orchestration",
-          "type": "demonstrates",
-          "note": "the flow row plus its task queue is a hand-rolled durable orchestrator — every transition is persisted, so a crash or deploy resumes mid-flow instead of restarting it",
-          "name": "Workflow Orchestration",
-          "href": "patterns/distributed/coordination/workflow-orchestration.html",
-          "label": "Demonstrates"
-        },
-        {
-          "to": "outbox",
-          "type": "demonstrates",
-          "note": "every state transition commits with its outbox event in one Postgres transaction, closing the write-then-crash-before-publish gap",
-          "name": "Outbox",
-          "href": "patterns/distributed/coordination/outbox.html",
-          "label": "Demonstrates"
-        },
-        {
-          "to": "inbox",
-          "type": "demonstrates",
-          "note": "every vendor callback lands as an inbox row unique on flow, step and the provider's own request id, in the same transaction as its effect — so a duplicate that arrives before the outbox write still collides",
-          "name": "Inbox",
-          "href": "patterns/distributed/coordination/inbox.html",
-          "label": "Demonstrates"
-        },
-        {
-          "to": "replication",
-          "type": "demonstrates",
-          "note": "a synchronous in-region standby gives the single writer failover without giving up its consistency stance",
-          "name": "Replication",
-          "href": "patterns/distributed/coordination/replication.html",
-          "label": "Demonstrates"
-        },
-        {
-          "to": "optimistic-concurrency-control",
-          "type": "demonstrates",
-          "note": "every transition carries WHERE state = expected AND version = seen, so a zombie worker's late write updates zero rows instead of double-applying",
-          "name": "Optimistic Concurrency Control",
-          "href": "patterns/distributed/coordination/optimistic-concurrency-control.html",
-          "label": "Demonstrates"
-        },
-        {
-          "to": "circuit-breaker",
-          "type": "demonstrates",
-          "note": "one breaker per vendor with its state in the shared cache, so every worker replica sees the same open circuit and one probe decides recovery",
-          "name": "Circuit Breaker",
-          "href": "patterns/distributed/resilience/circuit-breaker.html",
-          "label": "Demonstrates"
-        },
-        {
-          "to": "retry-backoff",
-          "type": "demonstrates",
-          "note": "vendor calls and webhook deliveries retry on a growing schedule recorded on the task row's run_after before the sweeper escalates them",
-          "name": "Retry with Backoff",
-          "href": "patterns/distributed/resilience/retry-backoff.html",
-          "label": "Demonstrates"
-        },
-        {
-          "to": "timeout-deadline",
-          "type": "demonstrates",
-          "note": "every task and every sanctions leg carries its own deadline, because no vendor publishes a latency bound and the sweeper needs a line to enforce",
-          "name": "Timeout / Deadline",
-          "href": "patterns/distributed/resilience/timeout-deadline.html",
-          "label": "Demonstrates"
-        },
-        {
-          "to": "bulkhead",
-          "type": "demonstrates",
-          "note": "each vendor gets its own worker pool, so a stalled sanctions vendor cannot starve ID verification or the email invites",
-          "name": "Bulkhead",
-          "href": "patterns/distributed/resilience/bulkhead.html",
-          "label": "Demonstrates"
-        },
-        {
-          "to": "sweeper",
-          "type": "demonstrates",
-          "note": "one scheduled job re-queues expired task locks, escalates exhausted tasks to a dead state, breaches the SLA out loud to operator and client, and runs both recheck clocks",
-          "name": "Sweeper",
-          "href": "patterns/distributed/coordination/sweeper.html",
-          "label": "Demonstrates"
-        },
-        {
-          "to": "leader-election",
-          "type": "demonstrates",
-          "note": "the sweeper and both recheck clocks each hold a renewable lease in the shared cache, so a second replica waits instead of double-firing an escalation or buying a vendor screen twice",
-          "name": "Leader Election",
-          "href": "patterns/distributed/coordination/leader-election.html",
-          "label": "Demonstrates"
-        },
-        {
-          "to": "acl",
-          "type": "demonstrates",
-          "note": "each vendor gets a translator that parses its payload and maps it onto our own three-valued outcome — and stamps provider and policy version onto the transition, so the history can answer how a person was verified",
-          "name": "Anti-Corruption Layer",
-          "href": "patterns/ddd/acl.html",
-          "label": "Demonstrates"
-        },
-        {
-          "to": "external-configuration-store",
-          "type": "demonstrates",
-          "note": "the list roster, each list's criticality, the recheck cadences, vendor quotas and fallback weights move without a deploy — and a worker that cannot reach the store boots from its last cached version rather than from defaults",
-          "name": "External Configuration Store",
-          "href": "patterns/distributed/coordination/external-configuration-store.html",
-          "label": "Demonstrates"
-        },
-        {
-          "to": "load-leveling",
-          "type": "demonstrates",
-          "note": "the task table is the queue that absorbs onboarding bursts and six-hour vendor outages ahead of fixed vendor rate limits",
-          "name": "Queue-Based Load Leveling",
-          "href": "patterns/distributed/resilience/load-leveling.html",
-          "label": "Demonstrates"
-        },
-        {
-          "to": "competing-consumers",
-          "type": "demonstrates",
-          "note": "stateless worker replicas compete for tasks with FOR UPDATE SKIP LOCKED, so two never claim the same row and adding capacity is just adding replicas",
-          "name": "Competing Consumers",
-          "href": "patterns/messaging/competing-consumers.html",
-          "label": "Demonstrates"
-        },
-        {
-          "to": "dead-letter-channel",
-          "type": "demonstrates",
-          "note": "a task that exhausts its retries is parked in a dead state — alerted to an operator, surfaced to the client as a failure event, re-runnable after the cause is fixed",
-          "name": "Dead Letter Channel",
-          "href": "patterns/messaging/dead-letter-channel.html",
-          "label": "Demonstrates"
-        },
-        {
-          "to": "scatter-gather",
-          "type": "demonstrates",
-          "note": "the sanctions step fans out one task per list and a collector transitions the flow exactly once, when every leg has reported",
-          "name": "Scatter-Gather",
-          "href": "patterns/messaging/scatter-gather.html",
-          "label": "Demonstrates"
-        },
-        {
-          "to": "idempotency",
-          "type": "demonstrates",
-          "note": "four boundaries, four dedup keys, each minted by whichever side can actually see the duplicate — a stored client key, the vendor's own request id, the task row's id, the event id",
-          "name": "Idempotency",
-          "href": "patterns/messaging/idempotency.html",
-          "label": "Demonstrates"
-        },
-        {
-          "to": "correlation-identifier",
-          "type": "demonstrates",
-          "note": "one flow id threads transitions, tasks, vendor calls and delivery attempts, so support reconstructs any flow with a single query",
-          "name": "Correlation Identifier",
-          "href": "patterns/messaging/correlation-identifier.html",
-          "label": "Demonstrates"
-        },
-        {
-          "to": "sequential-convoy",
-          "type": "demonstrates",
-          "note": "webhook delivery claims a flow rather than an event and sends its owed results in outbox order, so a re-screen's corrected verdict cannot overtake the one it corrects",
-          "name": "Sequential Convoy",
-          "href": "patterns/messaging/sequential-convoy.html",
-          "label": "Demonstrates"
-        },
-        {
-          "to": "priority-queue",
-          "type": "demonstrates",
-          "note": "live flows and the recurring recheck batch share one task table, so recheck tasks claim from a separately sized pool — reserved capacity per class, because the batch's jurisdiction cadence is a deadline too",
-          "name": "Priority Queue",
-          "href": "patterns/messaging/priority-queue.html",
-          "label": "Demonstrates"
-        },
-        {
-          "to": "autoscaling",
-          "type": "demonstrates",
-          "note": "worker pools scale on the age of their oldest pending task, never on processor load — these pools sit blocked on vendor calls, so CPU stays flat while the queue starves",
-          "name": "Autoscaling",
-          "href": "patterns/distributed/routing/autoscaling.html",
-          "label": "Demonstrates"
-        },
-        {
-          "to": "backpressure",
-          "type": "demonstrates",
-          "note": "flow creation answers 429 with a Retry-After once the live class's oldest pending task passes its ceiling — the queue is load-levelling, not an unbounded promise",
-          "name": "Backpressure",
-          "href": "patterns/concurrency/backpressure.html",
-          "label": "Demonstrates"
-        },
-        {
-          "to": "batching",
-          "type": "demonstrates",
-          "note": "the recurring re-screen sends ~500 persons per list-vendor call, and applies the response one member per transaction so a bad record dead-letters its own leg while the rest commit",
-          "name": "Batching",
-          "href": "patterns/concurrency/batching.html",
-          "label": "Demonstrates"
-        },
-        {
-          "to": "object-storage",
-          "type": "demonstrates",
-          "note": "ID photos go straight to an object store by presigned upload, referenced by key from a metadata row written before the upload",
-          "name": "Object Storage",
-          "href": "patterns/distributed/routing/object-storage.html",
-          "label": "Demonstrates"
-        },
-        {
-          "to": "valet-key",
-          "type": "demonstrates",
-          "note": "the ID photo goes up on a presigned URL scoped to one object for fifteen minutes, so the API tier decides who may upload and then leaves the data path entirely",
-          "name": "Valet Key",
-          "href": "patterns/distributed/routing/valet-key.html",
-          "label": "Demonstrates"
-        },
-        {
-          "to": "claim-check",
-          "type": "demonstrates",
-          "note": "workers pass the photo's storage key between steps, never the image bytes",
-          "name": "Claim Check",
-          "href": "patterns/messaging/claim-check.html",
-          "label": "Demonstrates"
-        },
-        {
-          "to": "secure-logger",
-          "type": "demonstrates",
-          "note": "log lines carry flow and person ids only — the encrypted vault is the single place raw PII exists, so logs never become a second copy of it",
-          "name": "Secure Logger",
-          "href": "patterns/security/secure-logger.html",
-          "label": "Demonstrates"
-        },
-        {
-          "to": "secure-session-manager",
-          "type": "demonstrates",
-          "note": "the onboardee has no account: their session is the magic link's hash — server-side state, single-use, 48-hour expiry, revoked the moment a resend supersedes it",
-          "name": "Secure Session Manager",
-          "href": "patterns/security/secure-session-manager.html",
-          "label": "Demonstrates"
-        },
-        {
-          "to": "rate-limiter",
-          "type": "demonstrates",
-          "note": "per-client limits at the API edge keep one tenant's onboarding burst from consuming the shared vendor quota, and bound the invite-resend endpoint",
-          "name": "Rate Limiter",
-          "href": "patterns/distributed/resilience/rate-limiter.html",
-          "label": "Demonstrates"
-        },
-        {
-          "to": "kiss",
-          "type": "demonstrates",
-          "note": "one Postgres and stateless workers carry a confirmed hundred onboardings a week; every rejected broker and engine is priced against that number, with named exits instead of early adoption",
-          "name": "Keep It Simple (KISS)",
-          "href": "principles/kiss.html",
-          "label": "Demonstrates"
-        },
-        {
-          "to": "deployment-stamp",
-          "type": "demonstrates",
-          "note": "residency is one full stack per region — gateway, API, workers, Postgres and standby, vault, object store — stamped from the same infrastructure-as-code so only jurisdiction config varies",
-          "name": "Deployment Stamp",
-          "href": "patterns/distributed/routing/deployment-stamp.html",
-          "label": "Demonstrates"
-        },
-        {
-          "to": "persona-identification-v2",
-          "type": "alternative-to",
-          "note": "the same brief argued from the delivery contract — read it when the grading is on exactly-once in effect, the four dedup boundaries and the recovery ladder rather than on the storage core",
-          "name": "Persona Identification & Sanction Check (V2)",
-          "href": "designs/persona-identification-v2.html",
-          "label": "Alternative to"
-        }
-      ],
-      "themes": [],
-      "memberPatterns": [],
-      "levels": {
-        "description-p-4": "advanced",
-        "description-p-5": "advanced",
-        "description-ul-1": "advanced",
-        "description-p-6": "advanced",
-        "description-p-7": "advanced",
-        "description-p-8": "advanced",
-        "description-p-9": "advanced",
-        "description-ul-2": "advanced",
-        "explain-basic": "basic",
-        "explain-advanced": "advanced",
-        "explain-expert": "expert",
-        "requirements-h4-2": "advanced",
-        "requirements-ol-2": "advanced",
-        "requirements-outofscope": "advanced",
-        "sizing-h-capabilities": "advanced",
-        "sizing-h-numbers": "advanced",
-        "sizing-h-verdicts": "advanced",
-        "sizing-h-limits": "expert",
-        "sizing-p-3": "expert",
-        "entities-p-2": "advanced",
-        "entities-ul-2": "advanced",
-        "entities-group-1": "advanced",
-        "entities-sketch-5": "advanced",
-        "entities-entity-5": "advanced",
-        "entities-entity-6": "advanced",
-        "entities-group-3": "advanced",
-        "entities-group-4": "advanced",
-        "entities-group-5": "advanced",
-        "interface-prose-1": "advanced",
-        "interface-sketch-1": "advanced",
-        "interface-endpoint-2": "advanced",
-        "interface-endpoint-3": "advanced",
-        "interface-endpoint-4": "advanced",
-        "interface-group-2": "advanced",
-        "interface-group-3": "advanced",
-        "interface-group-4": "advanced",
-        "interface-group-5": "advanced",
-        "interface-group-6": "advanced",
-        "architecture-fig-2": "advanced",
-        "architecture-prose-2": "advanced",
-        "architecture-prose-3": "advanced",
-        "architecture-table-1": "advanced",
-        "deepdives-p-2": "advanced",
-        "deepdives-p-3": "advanced",
-        "deepdives-p-4": "advanced",
-        "deepdives-p-5": "advanced",
-        "deepdives-p-6": "expert",
-        "deepdives-sketch-1": "advanced",
-        "deepdives-fig-1": "advanced",
-        "deepdives-p-7": "advanced",
-        "deepdives-p-9": "advanced",
-        "deepdives-p-10": "advanced",
-        "deepdives-p-11": "advanced",
-        "deepdives-p-12": "expert",
-        "deepdives-p-13": "expert",
-        "deepdives-prose-3": "advanced",
-        "deepdives-p-24": "expert",
-        "deepdives-fig-3": "advanced",
-        "deepdives-prose-4": "expert",
-        "deepdives-prose-5": "advanced",
-        "deepdives-p-36": "expert",
-        "deepdives-fig-4": "advanced",
-        "deepdives-prose-6": "advanced",
-        "deepdives-fig-5": "advanced",
-        "deepdives-prose-7": "advanced",
-        "deepdives-fig-6": "advanced",
-        "deepdives-prose-8": "advanced",
-        "deepdives-fig-7": "advanced",
-        "deepdives-prose-9": "advanced",
-        "deepdives-fig-8": "advanced",
-        "deepdives-prose-12": "expert",
-        "deepdives-fig-9": "expert",
-        "deepdives-prose-13": "expert",
-        "deepdives-fig-10": "expert",
-        "deepdives-prose-14": "expert",
-        "deepdives-fig-11": "expert",
-        "deepdives-prose-15": "expert",
-        "deepdives-fig-12": "expert",
-        "deepdives-prose-16": "expert",
-        "tradeoffs-pro-3": "advanced",
-        "tradeoffs-pro-4": "advanced",
-        "tradeoffs-pro-5": "advanced",
-        "tradeoffs-con-2": "advanced",
-        "tradeoffs-con-4": "expert",
-        "tradeoffs-con-5": "expert",
-        "tradeoffs-con-6": "expert",
-        "tradeoffs-con-7": "advanced",
-        "tradeoffs-con-8": "advanced",
-        "levels-sketch-1": "advanced",
-        "levels-sketch-2": "advanced",
-        "levels-sketch-3": "advanced",
-        "levels-sketch-4": "advanced",
-        "levels-h3-2": "advanced",
-        "levels-ul-2": "advanced",
-        "levels-h3-3": "expert",
-        "levels-ul-3": "expert"
-      },
-      "hasExplain": true,
-      "mentions": [
-        "distributed-cache",
-        "fan-out",
-        "materialized-view",
-        "api-gateway",
-        "noisy-neighbour",
-        "split-brain",
-        "thread-pool",
-        "dual-write-inconsistency"
-      ]
-    },
-    "parking-lot": {
-      "id": "parking-lot",
-      "name": "Parking Lot",
-      "kind": "design",
-      "band": "design",
-      "group": "design",
-      "essence": "Assign a compatible spot, issue a ticket, and price the stay — an OOP design about where each piece of state belongs",
-      "favourite": false,
-      "aliases": [
-        "parking garage",
-        "parking system"
-      ],
-      "tags": [
-        "low-level-design",
-        "domain-modeling",
-        "encapsulation",
-        "concurrency",
-        "separation-of-concerns"
-      ],
-      "solves": [
-        "where should this piece of state live — on the entity or on the manager that owns it",
-        "my data class is quietly turning into a calculator with its own business rules",
-        "two requests both see the same resource as free and both claim it",
-        "how do I keep a record object from reaching deep into my domain model",
-        "every rule about which item fits where lives in one giant if-else at the top"
-      ],
-      "docClass": "design",
-      "dir": "designs",
-      "path": "designs/parking-lot.html",
-      "relations": [
-        {
-          "to": "amazon-locker",
-          "type": "often-confused-with",
-          "note": "Both assign a resource and free it later; they differ on whether occupancy is intrinsic to the slot or a relationship the manager tracks",
-          "name": "Amazon Locker",
-          "href": "designs/amazon-locker.html",
-          "label": "Often confused with"
-        },
-        {
-          "to": "value-object",
-          "type": "demonstrates",
-          "note": "The Ticket is an immutable record — set once at entry, read-only after",
-          "name": "Value Object",
-          "href": "patterns/ddd/value-object.html",
-          "label": "Demonstrates"
-        },
-        {
-          "to": "strategy",
-          "type": "demonstrates",
-          "note": "Held in reserve for pricing and floor-allocation once the rules genuinely diverge",
-          "name": "Strategy",
-          "href": "patterns/gof/behavioral/strategy.html",
-          "label": "Demonstrates"
-        },
-        {
-          "to": "rw-lock",
-          "type": "demonstrates",
-          "note": "Fine-grained locking lets entrances search concurrently and claim a spot exclusively",
-          "name": "Read-Write Lock",
-          "href": "patterns/concurrency/rw-lock.html",
-          "label": "Demonstrates"
-        },
-        {
-          "to": "single-responsibility",
-          "type": "demonstrates",
-          "note": "Fee logic stays out of Ticket so the record isn't also a pricing calculator",
-          "name": "Single Responsibility Principle",
-          "href": "principles/single-responsibility.html",
-          "label": "Demonstrates"
-        },
-        {
-          "to": "separation-of-concerns",
-          "type": "demonstrates",
-          "note": "Business rules live in the orchestrator; Spot and Ticket stay dumb data",
-          "name": "Separation of Concerns",
-          "href": "principles/separation-of-concerns.html",
-          "label": "Demonstrates"
-        },
-        {
-          "to": "yagni",
-          "type": "demonstrates",
-          "note": "A PricingStrategy interface is deferred until pricing actually gets complex",
-          "name": "You Aren't Gonna Need It (YAGNI)",
-          "href": "principles/yagni.html",
-          "label": "Demonstrates"
-        },
-        {
-          "to": "law-of-demeter",
-          "type": "demonstrates",
-          "note": "The Ticket stores a spot id string, not a spot object, so it can't reach into the model",
-          "name": "Law of Demeter",
-          "href": "principles/law-of-demeter.html",
-          "label": "Demonstrates"
-        }
-      ],
-      "themes": [],
-      "memberPatterns": [],
-      "levels": {
-        "explain-basic": "basic",
-        "explain-advanced": "advanced",
-        "explain-expert": "expert",
-        "deepdives-li-4": "advanced",
-        "deepdives-dive-3": "expert",
-        "deepdives-p-3": "expert",
-        "tradeoffs-con-1": "advanced",
-        "tradeoffs-con-3": "expert",
-        "levels-li-2": "advanced",
-        "levels-li-3": "expert"
-      },
-      "hasExplain": true
-    },
-    "persona-identification-v2": {
-      "id": "persona-identification-v2",
-      "name": "Persona Identification & Sanction Check (V2)",
-      "kind": "design",
-      "band": "design",
-      "group": "design",
-      "essence": "The same identity-and-sanctions flow argued from its delivery contract: exactly-once in effect, and a clock on everything that can stall",
-      "favourite": false,
       "tags": [
         "event-driven",
         "consistency",
@@ -48844,16 +48051,8 @@
       ],
       "docClass": "design",
       "dir": "designs",
-      "path": "designs/persona-identification-v2.html",
+      "path": "designs/persona-identification.html",
       "relations": [
-        {
-          "to": "persona-identification",
-          "type": "alternative-to",
-          "note": "the same brief on a mutable flow row plus a history table and an outbox — read it when there is no event-sourcing budget and an auditor must read business state without tooling",
-          "name": "Persona Identification & Sanction Check",
-          "href": "designs/persona-identification.html",
-          "label": "Alternative to"
-        },
         {
           "to": "event-sourcing",
           "type": "demonstrates",
@@ -49186,32 +48385,18 @@
       "themes": [],
       "memberPatterns": [],
       "levels": {
-        "description-p-2": "advanced",
-        "description-p-3": "advanced",
         "description-p-4": "advanced",
         "description-p-5": "advanced",
         "description-p-6": "advanced",
         "description-p-7": "advanced",
         "description-p-8": "advanced",
-        "description-p-9": "advanced",
-        "description-li-1": "advanced",
-        "description-li-2": "advanced",
-        "description-li-3": "advanced",
-        "description-li-4": "advanced",
-        "description-li-5": "advanced",
-        "description-li-6": "advanced",
         "description-p-10": "advanced",
-        "description-p-11": "advanced",
-        "description-p-12": "expert",
-        "description-p-13": "expert",
-        "description-li-7": "expert",
-        "description-li-8": "expert",
-        "description-li-9": "expert",
-        "description-li-10": "expert",
-        "requirements-h-additional": "advanced",
-        "requirements-ol-additional": "advanced",
-        "requirements-fr-13": "advanced",
-        "requirements-fr-14": "advanced",
+        "description-p-12": "advanced",
+        "description-p-13": "advanced",
+        "description-p-14": "advanced",
+        "description-p-16": "expert",
+        "description-p-17": "expert",
+        "requirements-tier-additional": "advanced",
         "requirements-fr-15": "advanced",
         "requirements-fr-16": "advanced",
         "requirements-fr-17": "advanced",
@@ -49221,253 +48406,181 @@
         "requirements-fr-21": "advanced",
         "requirements-fr-22": "advanced",
         "requirements-fr-23": "advanced",
+        "requirements-fr-24": "advanced",
+        "requirements-fr-25": "advanced",
+        "requirements-fr-26": "advanced",
         "requirements-oos-2": "advanced",
         "requirements-oos-3": "advanced",
         "requirements-oos-4": "advanced",
-        "sizing-p-2": "advanced",
-        "sizing-h-capabilities": "advanced",
-        "sizing-cap-1": "advanced",
-        "sizing-p-3": "advanced",
-        "sizing-cap-2": "advanced",
-        "sizing-p-4": "advanced",
-        "sizing-cap-3": "advanced",
-        "sizing-p-5": "advanced",
-        "sizing-cap-4": "advanced",
-        "sizing-p-6": "advanced",
-        "sizing-cap-5": "advanced",
-        "sizing-p-7": "advanced",
-        "sizing-cap-6": "advanced",
-        "sizing-p-8": "advanced",
-        "sizing-cap-7": "advanced",
-        "sizing-p-9": "advanced",
-        "sizing-cap-8": "advanced",
-        "sizing-p-10": "advanced",
-        "sizing-cap-9": "advanced",
-        "sizing-p-11": "advanced",
-        "sizing-cap-10": "advanced",
-        "sizing-p-12": "advanced",
-        "sizing-cap-11": "advanced",
-        "sizing-p-13": "advanced",
+        "sizing-group-capabilities": "advanced",
         "sizing-cap-12": "expert",
-        "sizing-p-14": "expert",
         "sizing-cap-13": "expert",
-        "sizing-p-15": "expert",
         "sizing-cap-14": "expert",
-        "sizing-p-16": "expert",
-        "sizing-h-numbers": "advanced",
-        "sizing-num-1": "advanced",
-        "sizing-p-17": "advanced",
-        "sizing-num-2": "advanced",
-        "sizing-p-18": "advanced",
-        "sizing-num-3": "advanced",
-        "sizing-p-19": "advanced",
-        "sizing-num-4": "advanced",
-        "sizing-p-20": "advanced",
+        "sizing-group-numbers": "advanced",
         "sizing-num-5": "expert",
-        "sizing-p-21": "expert",
         "sizing-num-6": "expert",
-        "sizing-p-22": "expert",
-        "sizing-num-7": "advanced",
-        "sizing-p-23": "advanced",
         "sizing-num-8": "expert",
-        "sizing-p-24": "expert",
-        "sizing-h-verdicts": "advanced",
-        "sizing-verdict-1": "advanced",
-        "sizing-p-25": "advanced",
-        "sizing-verdict-2": "advanced",
-        "sizing-p-26": "advanced",
-        "sizing-verdict-3": "advanced",
-        "sizing-p-27": "advanced",
-        "sizing-verdict-4": "advanced",
-        "sizing-p-28": "advanced",
-        "sizing-verdict-5": "advanced",
-        "sizing-p-29": "advanced",
-        "sizing-verdict-6": "advanced",
-        "sizing-p-30": "advanced",
-        "sizing-verdict-7": "advanced",
-        "sizing-p-31": "advanced",
-        "sizing-verdict-8": "advanced",
-        "sizing-p-32": "advanced",
-        "sizing-verdict-9": "advanced",
-        "sizing-p-33": "advanced",
-        "sizing-verdict-10": "advanced",
-        "sizing-p-34": "advanced",
-        "sizing-verdict-11": "advanced",
-        "sizing-p-35": "advanced",
-        "sizing-verdict-12": "advanced",
-        "sizing-p-36": "advanced",
-        "sizing-verdict-13": "advanced",
-        "sizing-p-37": "advanced",
-        "sizing-verdict-14": "advanced",
-        "sizing-p-38": "advanced",
+        "sizing-group-verdicts": "advanced",
         "sizing-verdict-15": "expert",
-        "sizing-p-39": "expert",
         "sizing-verdict-16": "expert",
-        "sizing-p-40": "expert",
         "sizing-verdict-17": "expert",
-        "sizing-p-41": "expert",
         "sizing-verdict-18": "expert",
-        "sizing-p-42": "expert",
         "sizing-verdict-19": "expert",
-        "sizing-p-43": "expert",
         "sizing-verdict-20": "expert",
-        "sizing-p-44": "expert",
         "sizing-verdict-21": "expert",
-        "sizing-p-45": "expert",
         "sizing-verdict-22": "expert",
-        "sizing-p-46": "expert",
-        "sizing-h-limits": "expert",
-        "sizing-p-47": "expert",
+        "sizing-group-limits": "expert",
         "entities-fig-1": "advanced",
-        "entities-fig-2": "advanced",
         "entities-group-1": "advanced",
+        "entities-fig-2": "advanced",
         "entities-group-2": "advanced",
+        "entities-fig-3": "advanced",
         "entities-group-3": "advanced",
+        "entities-fig-4": "advanced",
         "entities-group-4": "advanced",
+        "entities-fig-5": "advanced",
+        "entities-group-5": "advanced",
         "interface-group-1": "advanced",
         "interface-group-1b": "advanced",
         "interface-group-2": "advanced",
         "interface-group-3": "advanced",
         "interface-group-4": "advanced",
-        "architecture-p-2": "advanced",
-        "architecture-fig-2": "advanced",
-        "architecture-fig-3": "expert",
         "architecture-h-components": "advanced",
-        "architecture-h-trace": "advanced",
+        "architecture-p-2": "advanced",
         "architecture-p-3": "advanced",
-        "arch-fr-1": "advanced",
-        "architecture-p-4": "advanced",
-        "arch-fr-2": "advanced",
-        "architecture-p-5": "advanced",
-        "arch-fr-3": "advanced",
-        "architecture-p-6": "advanced",
-        "arch-fr-4": "advanced",
-        "architecture-p-7": "advanced",
-        "arch-fr-5": "advanced",
-        "architecture-p-8": "advanced",
-        "arch-fr-6": "advanced",
-        "architecture-p-9": "advanced",
-        "arch-fr-7": "advanced",
-        "architecture-p-10": "advanced",
-        "arch-fr-8": "advanced",
-        "architecture-p-11": "advanced",
-        "arch-fr-9": "advanced",
-        "architecture-p-12": "advanced",
-        "arch-fr-10": "advanced",
-        "architecture-p-13": "advanced",
-        "arch-fr-11": "advanced",
-        "architecture-p-14": "advanced",
-        "arch-fr-12": "advanced",
-        "architecture-p-15": "advanced",
-        "arch-fr-13": "advanced",
-        "architecture-p-16": "advanced",
-        "arch-fr-14": "advanced",
-        "architecture-p-17": "advanced",
+        "architecture-modules": "advanced",
+        "arch-how-1": "advanced",
+        "arch-how-2": "advanced",
+        "arch-how-3": "advanced",
+        "arch-how-4": "advanced",
+        "arch-how-5": "advanced",
+        "arch-how-6": "advanced",
+        "arch-how-7": "advanced",
+        "arch-how-8": "advanced",
+        "arch-how-9": "advanced",
+        "arch-how-10": "advanced",
+        "arch-how-11": "advanced",
+        "arch-how-12": "advanced",
+        "arch-how-13": "advanced",
+        "arch-how-14": "advanced",
+        "architecture-h-fr-additional": "advanced",
         "arch-fr-15": "advanced",
-        "architecture-p-18": "advanced",
         "arch-fr-16": "advanced",
-        "architecture-p-19": "advanced",
         "arch-fr-17": "advanced",
-        "architecture-p-20": "advanced",
         "arch-fr-18": "advanced",
-        "architecture-p-21": "advanced",
         "arch-fr-19": "advanced",
-        "architecture-p-22": "advanced",
         "arch-fr-20": "advanced",
-        "architecture-p-23": "advanced",
         "arch-fr-21": "advanced",
-        "architecture-p-24": "advanced",
         "arch-fr-22": "advanced",
-        "architecture-p-25": "advanced",
         "arch-fr-23": "advanced",
-        "architecture-p-26": "advanced",
-        "architecture-p-27": "advanced",
+        "arch-fr-24": "advanced",
+        "arch-fr-25": "advanced",
+        "arch-fr-26": "advanced",
+        "architecture-h-nfr": "advanced",
+        "arch-nfr-1": "advanced",
+        "arch-nfr-2": "advanced",
+        "arch-nfr-3": "advanced",
+        "arch-nfr-4": "advanced",
+        "arch-nfr-5": "advanced",
+        "arch-nfr-6": "advanced",
+        "arch-nfr-7": "advanced",
+        "arch-nfr-8": "advanced",
+        "architecture-h-technology": "advanced",
+        "architecture-p-18": "advanced",
         "architecture-table-1": "advanced",
-        "architecture-p-28": "expert",
-        "architecture-table-2": "expert",
-        "deepdives-p-2": "advanced",
         "deepdives-p-3": "advanced",
         "deepdives-p-4": "advanced",
-        "deepdives-fig-1": "advanced",
-        "deepdives-dive-2": "advanced",
         "deepdives-p-5": "advanced",
-        "deepdives-h-boundary-1": "advanced",
-        "deepdives-p-6": "advanced",
-        "deepdives-h-boundary-2": "advanced",
+        "deepdives-fig-1": "advanced",
+        "deepdives-how-2": "advanced",
         "deepdives-p-7": "advanced",
-        "deepdives-h-boundary-3": "advanced",
+        "deepdives-h-boundary-1": "advanced",
         "deepdives-p-8": "advanced",
-        "deepdives-h-boundary-4": "advanced",
+        "deepdives-h-boundary-2": "advanced",
         "deepdives-p-9": "advanced",
-        "deepdives-h-boundary-5": "advanced",
+        "deepdives-h-boundary-3": "advanced",
         "deepdives-p-10": "advanced",
+        "deepdives-h-boundary-4": "advanced",
+        "deepdives-p-11": "advanced",
+        "deepdives-h-boundary-5": "advanced",
+        "deepdives-p-12": "advanced",
         "deepdives-fig-2": "advanced",
         "deepdives-h-order-guarantee": "advanced",
-        "deepdives-p-11": "advanced",
-        "deepdives-p-12": "advanced",
-        "deepdives-p-13": "expert",
-        "deepdives-dive-3": "advanced",
+        "deepdives-p-13": "advanced",
         "deepdives-p-14": "advanced",
-        "deepdives-h-rung-1": "advanced",
-        "deepdives-p-15": "advanced",
-        "deepdives-h-rung-2": "advanced",
+        "deepdives-p-15": "expert",
+        "deepdives-h-scope": "advanced",
         "deepdives-p-16": "advanced",
-        "deepdives-h-rung-3": "advanced",
         "deepdives-p-17": "advanced",
-        "deepdives-h-rung-4": "advanced",
         "deepdives-p-18": "advanced",
-        "deepdives-h-rung-5": "advanced",
         "deepdives-p-19": "advanced",
-        "deepdives-h-rung-6": "advanced",
+        "deepdives-h-supersede": "advanced",
         "deepdives-p-20": "advanced",
-        "deepdives-h-recovery-stance": "expert",
-        "deepdives-p-21": "expert",
-        "deepdives-h-clock-baseline": "expert",
+        "deepdives-p-21": "advanced",
         "deepdives-p-22": "expert",
         "deepdives-fig-3": "advanced",
-        "deepdives-dive-4": "advanced",
-        "deepdives-p-23": "advanced",
+        "deepdives-how-3": "advanced",
         "deepdives-p-24": "advanced",
+        "deepdives-h-rung-1": "advanced",
         "deepdives-p-25": "advanced",
+        "deepdives-h-rung-2": "advanced",
         "deepdives-p-26": "advanced",
+        "deepdives-h-rung-3": "advanced",
         "deepdives-p-27": "advanced",
-        "deepdives-dive-5": "expert",
-        "deepdives-p-28": "expert",
-        "deepdives-p-29": "expert",
-        "deepdives-p-30": "expert",
+        "deepdives-h-rung-4": "advanced",
+        "deepdives-p-28": "advanced",
+        "deepdives-h-rung-5": "advanced",
+        "deepdives-p-29": "advanced",
+        "deepdives-h-rung-6": "advanced",
+        "deepdives-p-30": "advanced",
+        "deepdives-h-recovery-stance": "expert",
         "deepdives-p-31": "expert",
-        "deepdives-metrics-table": "expert",
-        "deepdives-dive-6": "expert",
+        "deepdives-h-clock-baseline": "expert",
         "deepdives-p-32": "expert",
-        "deepdives-p-33": "expert",
-        "deepdives-p-34": "expert",
-        "deepdives-p-35": "expert",
-        "deepdives-dive-7": "expert",
-        "deepdives-p-36": "expert",
-        "deepdives-p-37": "expert",
-        "deepdives-p-38": "expert",
-        "deepdives-p-39": "expert",
-        "deepdives-dive-8": "expert",
+        "deepdives-fig-4": "advanced",
+        "deepdives-how-4": "advanced",
+        "deepdives-p-34": "advanced",
+        "deepdives-p-35": "advanced",
+        "deepdives-p-36": "advanced",
+        "deepdives-p-37": "advanced",
+        "deepdives-p-38": "advanced",
+        "deepdives-how-5": "expert",
         "deepdives-p-40": "expert",
         "deepdives-p-41": "expert",
         "deepdives-p-42": "expert",
         "deepdives-p-43": "expert",
-        "deepdives-dive-9": "advanced",
-        "deepdives-p-44": "advanced",
-        "deepdives-fig-4": "advanced",
-        "deepdives-dive-10": "advanced",
-        "deepdives-p-45": "advanced",
-        "deepdives-fig-5": "advanced",
-        "deepdives-dive-11": "advanced",
-        "deepdives-p-46": "advanced",
-        "deepdives-fig-6": "advanced",
-        "deepdives-dive-12": "expert",
+        "deepdives-metrics-table": "expert",
+        "deepdives-how-6": "expert",
+        "deepdives-p-45": "expert",
+        "deepdives-p-46": "expert",
         "deepdives-p-47": "expert",
         "deepdives-p-48": "expert",
-        "deepdives-sketch-1": "expert",
-        "deepdives-p-49": "expert",
-        "deepdives-sketch-2": "expert",
+        "deepdives-how-7": "expert",
         "deepdives-p-50": "expert",
+        "deepdives-p-51": "expert",
+        "deepdives-p-52": "expert",
+        "deepdives-p-53": "expert",
+        "deepdives-how-8": "expert",
+        "deepdives-p-55": "expert",
+        "deepdives-p-56": "expert",
+        "deepdives-p-57": "expert",
+        "deepdives-p-58": "expert",
+        "deepdives-how-9": "advanced",
+        "deepdives-p-60": "advanced",
+        "deepdives-fig-5": "advanced",
+        "deepdives-how-10": "advanced",
+        "deepdives-p-62": "advanced",
+        "deepdives-fig-6": "advanced",
+        "deepdives-how-11": "advanced",
+        "deepdives-p-64": "advanced",
+        "deepdives-fig-7": "advanced",
+        "deepdives-how-12": "expert",
+        "deepdives-p-66": "expert",
+        "deepdives-p-67": "expert",
+        "deepdives-sketch-1": "expert",
+        "deepdives-p-68": "expert",
+        "deepdives-sketch-2": "expert",
+        "deepdives-p-69": "expert",
         "deepdives-sketch-3": "expert",
         "tradeoffs-pro-2": "advanced",
         "tradeoffs-pro-3": "advanced",
@@ -49504,6 +48617,117 @@
         "distributed-tracing",
         "wire-tap"
       ]
+    },
+    "parking-lot": {
+      "id": "parking-lot",
+      "name": "Parking Lot",
+      "kind": "design",
+      "band": "design",
+      "group": "design",
+      "essence": "Assign a compatible spot, issue a ticket, and price the stay — an OOP design about where each piece of state belongs",
+      "favourite": false,
+      "aliases": [
+        "parking garage",
+        "parking system"
+      ],
+      "tags": [
+        "low-level-design",
+        "domain-modeling",
+        "encapsulation",
+        "concurrency",
+        "separation-of-concerns"
+      ],
+      "solves": [
+        "where should this piece of state live — on the entity or on the manager that owns it",
+        "my data class is quietly turning into a calculator with its own business rules",
+        "two requests both see the same resource as free and both claim it",
+        "how do I keep a record object from reaching deep into my domain model",
+        "every rule about which item fits where lives in one giant if-else at the top"
+      ],
+      "docClass": "design",
+      "dir": "designs",
+      "path": "designs/parking-lot.html",
+      "relations": [
+        {
+          "to": "amazon-locker",
+          "type": "often-confused-with",
+          "note": "Both assign a resource and free it later; they differ on whether occupancy is intrinsic to the slot or a relationship the manager tracks",
+          "name": "Amazon Locker",
+          "href": "designs/amazon-locker.html",
+          "label": "Often confused with"
+        },
+        {
+          "to": "value-object",
+          "type": "demonstrates",
+          "note": "The Ticket is an immutable record — set once at entry, read-only after",
+          "name": "Value Object",
+          "href": "patterns/ddd/value-object.html",
+          "label": "Demonstrates"
+        },
+        {
+          "to": "strategy",
+          "type": "demonstrates",
+          "note": "Held in reserve for pricing and floor-allocation once the rules genuinely diverge",
+          "name": "Strategy",
+          "href": "patterns/gof/behavioral/strategy.html",
+          "label": "Demonstrates"
+        },
+        {
+          "to": "rw-lock",
+          "type": "demonstrates",
+          "note": "Fine-grained locking lets entrances search concurrently and claim a spot exclusively",
+          "name": "Read-Write Lock",
+          "href": "patterns/concurrency/rw-lock.html",
+          "label": "Demonstrates"
+        },
+        {
+          "to": "single-responsibility",
+          "type": "demonstrates",
+          "note": "Fee logic stays out of Ticket so the record isn't also a pricing calculator",
+          "name": "Single Responsibility Principle",
+          "href": "principles/single-responsibility.html",
+          "label": "Demonstrates"
+        },
+        {
+          "to": "separation-of-concerns",
+          "type": "demonstrates",
+          "note": "Business rules live in the orchestrator; Spot and Ticket stay dumb data",
+          "name": "Separation of Concerns",
+          "href": "principles/separation-of-concerns.html",
+          "label": "Demonstrates"
+        },
+        {
+          "to": "yagni",
+          "type": "demonstrates",
+          "note": "A PricingStrategy interface is deferred until pricing actually gets complex",
+          "name": "You Aren't Gonna Need It (YAGNI)",
+          "href": "principles/yagni.html",
+          "label": "Demonstrates"
+        },
+        {
+          "to": "law-of-demeter",
+          "type": "demonstrates",
+          "note": "The Ticket stores a spot id string, not a spot object, so it can't reach into the model",
+          "name": "Law of Demeter",
+          "href": "principles/law-of-demeter.html",
+          "label": "Demonstrates"
+        }
+      ],
+      "themes": [],
+      "memberPatterns": [],
+      "levels": {
+        "explain-basic": "basic",
+        "explain-advanced": "advanced",
+        "explain-expert": "expert",
+        "deepdives-li-4": "advanced",
+        "deepdives-dive-3": "expert",
+        "deepdives-p-3": "expert",
+        "tradeoffs-con-1": "advanced",
+        "tradeoffs-con-3": "expert",
+        "levels-li-2": "advanced",
+        "levels-li-3": "expert"
+      },
+      "hasExplain": true
     },
     "elevator": {
       "id": "elevator",

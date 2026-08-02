@@ -94,18 +94,13 @@
       "kb:note": "poison jobs are quarantined for inspection so the main execution pipeline keeps flowing"
     },
     {
-      "@id": "../../designs/persona-identification.html#persona-identification",
-      "name": "Persona Identification & Sanction Check",
-      "kb:note": "isolating exhausted vendor calls and failed webhook deliveries per branch in a persona-verification saga"
-    },
-    {
       "@id": "../../designs/youtube.html#youtube",
       "name": "YouTube",
       "kb:note": "The poison transcode job is the classic dead-letter case"
     },
     {
-      "@id": "../../designs/persona-identification-v2.html#persona-identification-v2",
-      "name": "Persona Identification & Sanction Check (V2)",
+      "@id": "../../designs/persona-identification.html#persona-identification",
+      "name": "Persona Identification & Sanction Check",
       "kb:note": "dead-lettering applied at three scales — a task, a single batch member, and a whole delivery lane"
     }
   ],
@@ -411,9 +406,8 @@ async function runTask(task: Task): Promise&lt;void&gt; {
         <div class="rel-list">
           <div class="rel-item" data-kb-rel="demonstrated-by" data-kb-to="web-crawler"><a href="../../designs/web-crawler.html">Web Crawler</a><span class="rel-note">messages that repeatedly fail are shunted aside so they stop blocking the pipeline</span></div>
           <div class="rel-item" data-kb-rel="demonstrated-by" data-kb-to="job-scheduler"><a href="../../designs/job-scheduler.html">Job Scheduler</a><span class="rel-note">poison jobs are quarantined for inspection so the main execution pipeline keeps flowing</span></div>
-          <div class="rel-item" data-kb-rel="demonstrated-by" data-kb-to="persona-identification"><a href="../../designs/persona-identification.html">Persona Identification &amp; Sanction Check</a><span class="rel-note">isolating exhausted vendor calls and failed webhook deliveries per branch in a persona-verification saga</span></div>
           <div class="rel-item" data-kb-rel="demonstrated-by" data-kb-to="youtube"><a href="../../designs/youtube.html">YouTube</a><span class="rel-note">The poison transcode job is the classic dead-letter case</span></div>
-          <div class="rel-item" data-kb-rel="demonstrated-by" data-kb-to="persona-identification-v2"><a href="../../designs/persona-identification-v2.html">Persona Identification &amp; Sanction Check (V2)</a><span class="rel-note">dead-lettering applied at three scales — a task, a single batch member, and a whole delivery lane</span></div>
+          <div class="rel-item" data-kb-rel="demonstrated-by" data-kb-to="persona-identification"><a href="../../designs/persona-identification.html">Persona Identification &amp; Sanction Check</a><span class="rel-note">dead-lettering applied at three scales — a task, a single batch member, and a whole delivery lane</span></div>
         </div>
       </div>
 

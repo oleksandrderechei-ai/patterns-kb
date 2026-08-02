@@ -100,11 +100,6 @@
     {
       "@id": "../../designs/persona-identification.html#persona-identification",
       "name": "Persona Identification & Sanction Check",
-      "kb:note": "the accept path is coupled to the drain rate: refusing a KYC flow costs the client a retry they can see, accepting it costs them a flow invisible for hours"
-    },
-    {
-      "@id": "../../designs/persona-identification-v2.html#persona-identification-v2",
-      "name": "Persona Identification & Sanction Check (V2)",
       "kb:note": "refusal published as a contract term, on the argument that an accepted flow buried in a backlog is a worse failure than a rejected one"
     }
   ],
@@ -424,8 +419,7 @@ sequenceDiagram
         <p class="rel-type">Demonstrated by</p>
         <div class="rel-list">
           <div class="rel-item" data-kb-rel="demonstrated-by" data-kb-to="chatgpt"><a href="../../designs/chatgpt.html">ChatGPT</a><span class="rel-note">rejecting overload rather than letting latency and queue depth grow without limit is backpressure applied at system scale</span></div>
-          <div class="rel-item" data-kb-rel="demonstrated-by" data-kb-to="persona-identification"><a href="../../designs/persona-identification.html">Persona Identification &amp; Sanction Check</a><span class="rel-note">the accept path is coupled to the drain rate: refusing a KYC flow costs the client a retry they can see, accepting it costs them a flow invisible for hours</span></div>
-          <div class="rel-item" data-kb-rel="demonstrated-by" data-kb-to="persona-identification-v2"><a href="../../designs/persona-identification-v2.html">Persona Identification &amp; Sanction Check (V2)</a><span class="rel-note">refusal published as a contract term, on the argument that an accepted flow buried in a backlog is a worse failure than a rejected one</span></div>
+          <div class="rel-item" data-kb-rel="demonstrated-by" data-kb-to="persona-identification"><a href="../../designs/persona-identification.html">Persona Identification &amp; Sanction Check</a><span class="rel-note">refusal published as a contract term, on the argument that an accepted flow buried in a backlog is a worse failure than a rejected one</span></div>
         </div>
       </div>
 

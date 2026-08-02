@@ -106,15 +106,22 @@ const ITEMS = [
    * nested sub-list travels with the row that owns it, and pages that want a sub-item
    * addressed give it a keyed id by hand (youtube's requirements-nfr-scale-2).
    *
-   * Each selector carries TWO shapes, because the corpus holds both and neither is wrong.
-   * FRs are a numbered <ol> on most pages and a <ul> where the page does not cite its own
-   * requirements by number. An NFR is a <li> with a bold lead on most pages, and on the
-   * persona pair a `.nfr` section — a rank-4 title over its points — which is why the
-   * legacy selector stays anchored at `.nonfunctional > ul > li`: inside a `.nfr` the
-   * points sit one level deeper, so a section's bullets can never be mistaken for rows.
-   * A page mixing the two numbers in document order, which is the only sane reading. */
+   * Each selector carries SEVERAL shapes, because the corpus holds them all and none is
+   * wrong. FRs are a numbered <ol> on most pages and a <ul> where the page does not cite
+   * its own requirements by number; either way the row is the <li>, so a page that folds
+   * each requirement into a `details.req` (short summary, full sentence inside) keeps its
+   * id where it always was — `.functional ul > li` is a descendant match and the tier
+   * `details.req-tier` between the column and the list changes nothing.
+   *
+   * An NFR is a <li> with a bold lead on most pages, and on persona-identification a
+   * `.nfr` section — a rank-4 title over its points. That section is a <div> when its
+   * points are always open and a <details> when the page collapses them, which puts the
+   * title one level deeper behind a <summary>; both are listed. The legacy selector stays
+   * anchored at `.nonfunctional > ul > li` because inside a `.nfr` the points sit one
+   * level deeper, so a section's bullets can never be mistaken for rows.
+   * A page mixing the shapes numbers in document order, which is the only sane reading. */
   { block: "requirements", sel: ".functional ol > li, .functional ul > li", idOf: (_el, i) => `requirements-fr-${i + 1}` },
-  { block: "requirements", sel: ".nonfunctional > ul > li, .nonfunctional > .nfr > h4", idOf: (_el, i) => `requirements-nfr-${i + 1}` },
+  { block: "requirements", sel: ".nonfunctional > ul > li, .nonfunctional > .nfr > h4, .nonfunctional > .nfr > summary > h4", idOf: (_el, i) => `requirements-nfr-${i + 1}` },
 ];
 /* This table is the ONLY writer of data-kb-polarity — the attribute is projected from the
  * column an item sits in, not hand-written — so these eight literals and the POLARITIES
